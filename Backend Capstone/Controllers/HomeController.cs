@@ -10,6 +10,7 @@ namespace Backend_Capstone.Controllers
 {
     public class HomeController : Controller
     {
+        //heyyyyyy
         public IActionResult Index()
         {
             return View();
