@@ -22,6 +22,7 @@ namespace Backend_Capstone.Models
         [NotMapped]
         public virtual ICollection<Recipe> FavoriteRecipes { get; set; }
 
+        [NotMapped]
         public virtual ICollection<Recipe> WeeklyRecipes { get; set; }
     }
 }
