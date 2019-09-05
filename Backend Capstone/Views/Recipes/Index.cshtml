@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Backend_Capstone.Models.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center mainContainer">
+    <hr />
+    <h1 class="mainContainer">All Recipes</h1>
+    <a asp-action="Create">Add New</a>
+</div>
+
+<div class="d-flex overflow-auto flex-wrap">
+    @foreach (var item in Model)
+    {
+        <div id="@item.Id" class="d-flex flex-column overflow-hidden gridCard">
+            <div class="d-block overflow-hidden smallCardImage">
+                <img src="@Url.Content(item.ImageUrl)" />
+
+            </div>
+            <div class="d-block overflow-hidden">
+                <h2>@item.Title</h2>
+                <p>@item.Description</p>
+
+            </div>
+        </div>
+    }
+  
+</div>
+
+
+
+
+

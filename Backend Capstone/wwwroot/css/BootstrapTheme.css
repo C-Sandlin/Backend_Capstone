@@ -567,7 +567,7 @@ pre {
 
 @media (min-width: 1200px) {
     .container {
-        max-width: 1440px;
+        max-width: 1550px;
     }
 }
 
@@ -11611,14 +11611,3 @@ select.form-control {
     color: inherit;
 }
 
-@font-face {
-    font-family: "Prospectus Pro Blk";
-    src: url('~/fonts/ProspectusLBlk.otf') format('opentype');
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Prospectus Pro Blk";
-}
-
-.PPBlk {
-    font-family: "Prospectus Pro Blk";}
