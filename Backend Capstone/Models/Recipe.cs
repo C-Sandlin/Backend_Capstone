@@ -13,7 +13,6 @@ namespace Backend_Capstone.Models
         public int Id { get; set; }
         
         [Required]
-
         public string ImageUrl { get; set; }
 
         [Required]

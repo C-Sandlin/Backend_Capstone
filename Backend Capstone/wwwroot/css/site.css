@@ -78,6 +78,10 @@ body {
     margin-left: 20px;
 }
 
+.leftSideMarg {
+    margin-left: 120px;
+}
+
 .mainLogo {
     width: 150px;
     height: 75px;
@@ -89,4 +93,65 @@ body {
 
 .btn {
     box-shadow: none;
+}
+
+.mainContainer {
+    margin-top: 30px;
+}
+.landing {
+    width: 100%;
+    height: 80vh;
+    background-image: linear-gradient( rgba(128,128,128, 0.3), rgb(128, 128, 128, 0.3) ), url("https://images.unsplash.com/photo-1497888329096-51c27beff665?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2851&q=80");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.landing-text {
+    width: 50%;
+    height: 100%;
+}
+
+body {
+    margin-bottom: 0px;
+}
+
+
+@font-face {
+    font-family: "Prospectus Pro Blk";
+    src: url('~/fonts/ProspectusLBlk.otf') format('opentype');
+}
+
+@font-face {
+    font-family: "Prospectus Pro BldItal";
+    src: url('~/fonts/ProspectusLBldItal.otf') format('opentype');
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Prospectus Pro Bld";
+}
+
+.impactTextHead {
+    font-size: 60px;
+}
+
+.impactTextP {
+    font-size: 20px;
+}
+
+.PPBlk {
+    font-family: "Prospectus Pro Blk";
+}
+
+.gridCard {
+    border: 1px solid red;
+    padding: 10px;
+    width: 400px;
+    height: 500px;
+    margin: 50px;
+}
+
+.smallCardImage {
+    max-width: 100%;
+    max-height: 100%;
 }
