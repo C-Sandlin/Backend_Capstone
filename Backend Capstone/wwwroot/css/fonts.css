@@ -1,10 +1,8 @@
 ﻿@font-face {
-    font-family: 'Prospectus Pro';
-    src: url('C:\Windows\Fonts\Prospectus Pro L');
+    font-family: 'Prospectus Pro Blk';
+    src: url('~/fonts/ProspectusLBlk.otf');
 }
 
 h1, h2, h3 {
-    font-family: 'Prospectus Pro';
-    font-weight: 900;
-    letter-spacing: -1.5px;
+    font-family: 'Prospectus Pro Blk';
 }

@@ -567,7 +567,7 @@ pre {
 
 @media (min-width: 1200px) {
     .container {
-        max-width: 1140px;
+        max-width: 1440px;
     }
 }
 
@@ -4264,7 +4264,7 @@ input[type="button"].btn-block {
 
         .navbar-expand-md .navbar-collapse {
             display: flex !important;
-            flex-basis: auto;
+            /*flex-basis: auto;*/
         }
 
         .navbar-expand-md .navbar-toggler {
@@ -10982,7 +10982,7 @@ a.text-dark:hover, a.text-dark:focus {
     }
 
 .btn {
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     border: none;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
     transition: all 0.4s;
@@ -11117,7 +11117,7 @@ input[type=number],
 [type=email].form-control,
 [type=tel].form-control,
 [contenteditable].form-control {
-    box-shadow: inset 0 -1px 0 #ddd;
+    box-shadow: inset 0 -1px 0 #cfcfcf;
     transition: all 0.2s;
 }
 
@@ -11133,7 +11133,7 @@ input[type=number],
     [type=email].form-control:focus,
     [type=tel].form-control:focus,
     [contenteditable].form-control:focus {
-        box-shadow: inset 0 -2px 0 #2196F3;
+        box-shadow: inset 0 -2px 0 #eabb53;
     }
 
     textarea[disabled], textarea[readonly],
@@ -11610,3 +11610,15 @@ select.form-control {
 .carousel-caption h1, .carousel-caption h2, .carousel-caption h3, .carousel-caption h4, .carousel-caption h5, .carousel-caption h6 {
     color: inherit;
 }
+
+@font-face {
+    font-family: "Prospectus Pro Blk";
+    src: url('~/fonts/ProspectusLBlk.otf') format('opentype');
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Prospectus Pro Blk";
+}
+
+.PPBlk {
+    font-family: "Prospectus Pro Blk";}
