@@ -6,52 +6,97 @@
     <title>@ViewData["Title"] - Backend_Capstone</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/BootstrapTheme.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        <link rel="stylesheet" href="~/css/BootstrapTheme.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        @@font-face {
+            font-family: Prospectus Pro Blk;
+            src: url('/fonts/ProspectusLBlk.otf') format('opentype');
+        }
+
+        .PPBlk {
+            font-family: 'Prospectus Pro Blk'
+        }
+
+        @@font-face {
+            font-family: Prospectus Pro Bld;
+            src: url('/fonts/ProspectusLBld.otf') format('opentype');
+        }
+
+        .PPBld {
+            font-family: 'Prospectus Pro Bld'
+        }
+    </style>
+
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+        <nav class="navbar navbar-expand-md navbar-fixed-top navbar-light bg-transparent main-nav shadow-none">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Backend_Capstone</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <div class="navbar-collapse collapse nav-content order-2">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link PPBld sideMarg" href="#">All Recipes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link PPBld sideMarg" href="#">My Favorites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link PPBld sideMarg" href="#">Weekly Plan</a>
                         </li>
                     </ul>
                 </div>
+                <ul class="nav navbar-nav text-nowrap flex-row mx-md-auto order-1 order-md-2">
+                    <a href="#"><img class="mainLogo" src="~/images/CIC_main.svg"/></a>
+                    <button class="navbar-toggler ml-2" type="button" data-toggle="collapse" data-target=".nav-content" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </ul>
+                <div class="ml-auto navbar-collapse flex-row-reverse nav-content order-3 order-md-3">
+
+                    <ul class=" nav navbar-nav">
+                        <partial name="_LoginPartial" class="sideMarg" />
+
+                        @*@using (Html.BeginForm())
+            {
+                //search input
+
+                @Html.TextBox("userInput")
+
+                <button class="btn btn-outline-warning my-2 my-sm-0 btn-sm" type="submit" onclick="window.location='@Url.Action("Index", "Products")'">Search</button>
+            }*@
+                    </ul>
+                    <form class="form-inline my-2 my-sm-0" typeof="submit">
+                        <input class="form-control searchBox" type="search" placeholder="search" aria-label="Search">
+                    </form>
+                </div>
             </div>
         </nav>
+
+
     </header>
     <div class="container">
-        <partial name="_CookieConsentPartial" />
+        @*<partial name="_CookieConsentPartial" />*@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - Backend_Capstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2019 - Backend_Capstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
