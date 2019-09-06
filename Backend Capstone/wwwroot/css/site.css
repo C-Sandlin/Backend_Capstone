@@ -68,6 +68,9 @@ body {
     margin-right: 10px;
 }
 
+.topMarg {
+    margin-top: 30px;
+}
 .sideMarg {
     margin-right: 10px;
     margin-left: 10px;
@@ -144,14 +147,33 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gridCard {
-    border: 1px solid red;
-    padding: 10px;
+    /*padding: 10px;*/
     width: 400px;
     height: 500px;
-    margin: 50px;
+    margin: 25px;
 }
 
 .smallCardImage {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 70%;
+}
+
+.card {
+    border-radius: 0px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 5px rgba(0,0,0,0.1);
+}
+
+
+.customHr {
+    border-top: 1px dotted black;
+    margin-bottom: 0px;
+}
+
+.noTopBottomMarg {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.text-muted {
+    color: #808080 !important;
 }
