@@ -4,29 +4,32 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="text-center mainContainer">
+
+<div class="text-center">
     <hr />
     <h1 class="mainContainer">All Recipes</h1>
     <a asp-action="Create">Add New</a>
 </div>
 
 <div class="d-flex overflow-auto flex-wrap">
+
     @foreach (var item in Model)
     {
-        <div id="@item.Id" class="d-flex flex-column overflow-hidden gridCard">
-            <div class="d-block overflow-hidden smallCardImage">
-                <img src="@Url.Content(item.ImageUrl)" />
-
+        <div id="@item.Id" class="card gridCard">
+            <div class="card-body overflow-hidden">
+                <img class="card-img-top" src="@Url.Content(item.ImageUrl)" />
             </div>
-            <div class="d-block overflow-hidden">
-                <h2>@item.Title</h2>
-                <p>@item.Description</p>
-
+            <div class="card-body">
+                <h3 class="card-title" style="margin-bottom: 0px;">@item.Title</h3>
+                <p class="card-text"><small class="text-muted"><i class="fas fa-clock"></i>  Time: @item.TotalTime minutes</small></p>
+                <p class="card-text" style="font-size: 12px;">@item.Description</p>
+                <a asp-controller="Recipes" asp-action="Detail">View Recipe</a>
             </div>
         </div>
     }
-  
+
 </div>
+
 
 
 
