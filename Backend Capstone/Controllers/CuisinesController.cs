@@ -7,36 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Backend_Capstone.Data;
 using Backend_Capstone.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 
 namespace Backend_Capstone.Controllers
 {
-    public class RecipesController : Controller
+    public class CuisinesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RecipesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public CuisinesController(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
-        // GET: All Recipes
+        // GET: Cuisines
         public async Task<IActionResult> Index()
         {
-            
-                var allRecipes = await _context.Recipe
-                                                .Include(r => r.Ingredients)
-                                                .Include(r => r.Instructions)
-                                                .ToListAsync();
-            allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
-            return View(allRecipes);
+            return View(await _context.Cuisine.ToListAsync());
         }
 
-        // GET: Recipes/Details/5
+        // GET: Cuisines/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,44 +33,39 @@ namespace Backend_Capstone.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe
+            var cuisine = await _context.Cuisine
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (recipe == null)
+            if (cuisine == null)
             {
                 return NotFound();
             }
 
-            return View(recipe);
+            return View(cuisine);
         }
 
-        // GET: Recipes/Create
-        [Authorize]
+        // GET: Cuisines/Create
         public IActionResult Create()
         {
-            ViewData["CuisineId"] = new SelectList(_context.Cuisine, "Id", "Title");
             return View();
         }
 
-        // POST: Recipes/Create
+        // POST: Cuisines/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,Title")] Cuisine cuisine)
         {
-            var user = await GetCurrentUserAsync();
-   
             if (ModelState.IsValid)
             {
-                recipe.ApplicationUserId = user.Id;
-                _context.Add(recipe);
+                _context.Add(cuisine);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(recipe);
+            return View(cuisine);
         }
 
-        // GET: Recipes/Edit/5
+        // GET: Cuisines/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,22 +73,22 @@ namespace Backend_Capstone.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe.FindAsync(id);
-            if (recipe == null)
+            var cuisine = await _context.Cuisine.FindAsync(id);
+            if (cuisine == null)
             {
                 return NotFound();
             }
-            return View(recipe);
+            return View(cuisine);
         }
 
-        // POST: Recipes/Edit/5
+        // POST: Cuisines/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] Cuisine cuisine)
         {
-            if (id != recipe.Id)
+            if (id != cuisine.Id)
             {
                 return NotFound();
             }
@@ -113,12 +97,12 @@ namespace Backend_Capstone.Controllers
             {
                 try
                 {
-                    _context.Update(recipe);
+                    _context.Update(cuisine);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RecipeExists(recipe.Id))
+                    if (!CuisineExists(cuisine.Id))
                     {
                         return NotFound();
                     }
@@ -129,10 +113,10 @@ namespace Backend_Capstone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(recipe);
+            return View(cuisine);
         }
 
-        // GET: Recipes/Delete/5
+        // GET: Cuisines/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,32 +124,30 @@ namespace Backend_Capstone.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe
+            var cuisine = await _context.Cuisine
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (recipe == null)
+            if (cuisine == null)
             {
                 return NotFound();
             }
 
-            return View(recipe);
+            return View(cuisine);
         }
 
-        // POST: Recipes/Delete/5
+        // POST: Cuisines/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var recipe = await _context.Recipe.FindAsync(id);
-            _context.Recipe.Remove(recipe);
+            var cuisine = await _context.Cuisine.FindAsync(id);
+            _context.Cuisine.Remove(cuisine);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RecipeExists(int id)
+        private bool CuisineExists(int id)
         {
-            return _context.Recipe.Any(e => e.Id == id);
+            return _context.Cuisine.Any(e => e.Id == id);
         }
-
-        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }
