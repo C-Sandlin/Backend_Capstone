@@ -4,65 +4,103 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Recipe</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrepTime" class="control-label"></label>
-                <input asp-for="PrepTime" class="form-control" />
-                <span asp-validation-for="PrepTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CookTime" class="control-label"></label>
-                <input asp-for="CookTime" class="form-control" />
-                <span asp-validation-for="CookTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Servings" class="control-label"></label>
-                <input asp-for="Servings" class="form-control" />
-                <span asp-validation-for="Servings" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CuisineId" class="control-label"></label>
-                <input asp-for="CuisineId" class="form-control" />
-                <span asp-validation-for="CuisineId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ApplicationUserId" class="control-label"></label>
-                <input asp-for="ApplicationUserId" class="form-control" />
-                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<h2>Add a New Recipe</h2>
+@using (Html.BeginForm("Create",
+"Recipes",
+FormMethod.Post,
+new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <h5>Image Upload</h5>
+                    <label asp-for="ImageUrl" class="control-label">Upload an image(must be in .jpg format)</label><br />
+                    <input type="file" name="file" id="file" class="" />
+                </div>
+                <div class="form-group input-group-sm">
+                    <h5>Title</h5>
+                    <input asp-for="Title" class="form-control input-sm" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <h5>Prep Time</h5>
+                    <input asp-for="PrepTime" class="form-control" />
+                    <span asp-validation-for="PrepTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <h5>Cook Time</h5>
+                    <input asp-for="CookTime" class="form-control  input-sm" />
+                    <span asp-validation-for="CookTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <h5>Servings</h5>
+                    <input asp-for="Servings" class="quantity" />
+                    <span asp-validation-for="Servings" class="text-danger"></span>
+                </div>
+                <div class="form-group input-group-sm">
+                    <h5>Description</h5>
+                    <textarea asp-for="Description" class="form-control  input-sm" placeholder="Tell us why you like this recipe"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <h5>Ingredients</h5>
+                    <div id="ingredientsDiv">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <input type="text"  class="form-control" asp-for="Ingredients[0].Quantity" name="Ingredients[0].Quantity" placeholder="Qty">
+                            </div>
+                            <div class="col-sm-8 input-group">
+                                <input type="text"  class="form-control" asp-for="Ingredients[0].Title" name="Ingredients[0].Title" placeholder="Ingredient Name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="addIngredientInput()"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            let count = 0;
+                            function getDynamicInput(values) {
+                                return `<div class="row"><div class="col-sm-3"><input type="text" asp-for="Ingredients[${count}].Quantity" name="Ingredients[${count}].Quantity" class="form-control" placeholder="Qty"></div > <div class="col-sm-8 input-group"><input type="text"  asp-for="Ingredients[${count}].Title" name="Ingredients[${count}].Title" class="form-control" placeholder="Ingredient Name"><div class="input-group-append"><button class="btn btn-outline-secondary" type="button" onclick="addIngredientInput()" value="Add"><i class="fas fa-plus"></i></button><button class="btn btn-outline-secondary" type="button" onclick="removeIngredientInput(this)" value="Remove"><i class="fas fa-minus"></i></button></div></div></div>`;
+                            }
+                            
+                            function addIngredientInput() {
+                                count += 1;
+                                var div = document.createElement('DIV');
+                                div.innerHTML = getDynamicInput("");
+                                document.getElementById("ingredientsDiv").appendChild(div);
+                            }
+
+                            function removeIngredientInput(div) {
+                                count -= 1;
+                                let x = document.getElementById("ingredientsDiv").lastChild;
+                                document.getElementById("ingredientsDiv").removeChild(x);
+                            }
+                        </script>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5>Cuisine</h5>
+                    <select asp-for="CuisineId" class="form-control input-sm" asp-items="ViewBag.CuisineId"></select>
+                </div>
+                <div class="form-group input-group-sm" hidden>
+                    <input asp-for="ApplicationUserId" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-warning" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

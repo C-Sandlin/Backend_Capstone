@@ -12,7 +12,7 @@ namespace Backend_Capstone.Models
         [Key]
         public int Id { get; set; }
         
-        [Required]
+        
         public string ImageUrl { get; set; }
 
         [Required]
@@ -37,6 +37,7 @@ namespace Backend_Capstone.Models
 
 
         [Required]
+        [Range(1, 20, ErrorMessage = "Servings must be between 1 and 20 people")]
         public int Servings { get; set; }
 
         [Required]
@@ -46,15 +47,15 @@ namespace Backend_Capstone.Models
         public int CuisineId { get; set; }
 
         [Required]
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateAdded { get; set; }
 
-        public virtual ICollection<Ingredient> Ingredients { get; set; }
-        public virtual ICollection<Instruction> Instructions { get; set; }
+        public virtual List<Ingredient> Ingredients { get; set; }
+        public virtual List<Instruction> Instructions { get; set; }
 
         public ApplicationUser User { get; set; }
 
