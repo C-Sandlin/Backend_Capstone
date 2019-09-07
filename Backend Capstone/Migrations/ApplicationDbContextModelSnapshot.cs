@@ -19,6 +19,83 @@ namespace Backend_Capstone.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Backend_Capstone.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "00000000-ffff-ffff-ffff-ffffffffffff",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d46ac282-d061-42a0-8224-f15e2fa40be0",
+                            Email = "shelby@shelby.com",
+                            EmailConfirmed = true,
+                            FirstName = "Shelby",
+                            LastName = "Sandlin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SHELBY@SHELBY.COM",
+                            NormalizedUserName = "SHELBY@SHELBY.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ5eHrkV3UGizlkFNnFzYpN0M3XPow8IesyQX0JyPW3m9DCJspfK3OkJE4+hfShTuA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
+                            TwoFactorEnabled = false,
+                            UserName = "shelby@shelby.com"
+                        });
+                });
+
             modelBuilder.Entity("Backend_Capstone.Models.Cuisine", b =>
                 {
                     b.Property<int>("Id")
@@ -323,7 +400,7 @@ namespace Backend_Capstone.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ApplicationUserId");
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<int>("CookTime");
 
@@ -336,8 +413,7 @@ namespace Backend_Capstone.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired();
+                    b.Property<string>("ImageUrl");
 
                     b.Property<int>("PrepTime");
 
@@ -347,11 +423,9 @@ namespace Backend_Capstone.Migrations
                         .IsRequired()
                         .HasMaxLength(55);
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Recipe");
 
@@ -359,7 +433,7 @@ namespace Backend_Capstone.Migrations
                         new
                         {
                             Id = 1,
-                            ApplicationUserId = 1,
+                            ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff",
                             CookTime = 20,
                             CuisineId = 5,
                             DateAdded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -372,7 +446,7 @@ namespace Backend_Capstone.Migrations
                         new
                         {
                             Id = 2,
-                            ApplicationUserId = 1,
+                            ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff",
                             CookTime = 20,
                             CuisineId = 4,
                             DateAdded = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -426,62 +500,6 @@ namespace Backend_Capstone.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -554,39 +572,6 @@ namespace Backend_Capstone.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Backend_Capstone.Models.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired();
-
-                    b.Property<string>("LastName")
-                        .IsRequired();
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "00000000-ffff-ffff-ffff-ffffffffffff",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "34842a85-2120-4af7-946d-0f83d726ca22",
-                            Email = "shelby@shelby.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SHELBY@SHELBY.COM",
-                            NormalizedUserName = "SHELBY@SHELBY.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJtGq6dY9gMqbKZ/Fs9maAToOOhDeLXZfdBuSRvr85IEEQ4iPoHNNR4CKhX0QmNJRg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
-                            TwoFactorEnabled = false,
-                            UserName = "shelby@shelby.com",
-                            FirstName = "Shelby",
-                            LastName = "Sandlin"
-                        });
-                });
-
             modelBuilder.Entity("Backend_Capstone.Models.Ingredient", b =>
                 {
                     b.HasOne("Backend_Capstone.Models.Recipe")
@@ -606,8 +591,8 @@ namespace Backend_Capstone.Migrations
             modelBuilder.Entity("Backend_Capstone.Models.Recipe", b =>
                 {
                     b.HasOne("Backend_Capstone.Models.ApplicationUser", "User")
-                        .WithMany("WeeklyRecipes")
-                        .HasForeignKey("UserId");
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -620,7 +605,7 @@ namespace Backend_Capstone.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Backend_Capstone.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -628,7 +613,7 @@ namespace Backend_Capstone.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Backend_Capstone.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -641,7 +626,7 @@ namespace Backend_Capstone.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Backend_Capstone.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -649,7 +634,7 @@ namespace Backend_Capstone.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Backend_Capstone.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

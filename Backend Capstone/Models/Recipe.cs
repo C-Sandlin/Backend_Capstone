@@ -46,7 +46,7 @@ namespace Backend_Capstone.Models
         [Required]
         public int CuisineId { get; set; }
 
-        [Required]
+        
         public string ApplicationUserId { get; set; }
         
         [Required]

@@ -70,7 +70,8 @@ namespace Backend_Capstone.Controllers
         public async Task<IActionResult> Create([Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
         {
             var user = await GetCurrentUserAsync();
-   
+
+            ModelState.Remove("UserId");
             if (ModelState.IsValid)
             {
                 recipe.ApplicationUserId = user.Id;
@@ -78,6 +79,7 @@ namespace Backend_Capstone.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CuisineId"] = new SelectList(_context.Cuisine, "Id", "Title");
             return View(recipe);
         }
 

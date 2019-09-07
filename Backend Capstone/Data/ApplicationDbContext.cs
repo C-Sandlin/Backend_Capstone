@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend_Capstone.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
@@ -113,7 +113,7 @@ namespace Backend_Capstone.Data
                    Servings = 4,
                    Description = "A weeknight dinner party is easy with this chicken dinner that’s special enough for company. Pair it with roasted potatoes and steamed broccoli with fresh herbs to satisfy all your guests, even those who eat gluten-free.",
                    CuisineId = 5,
-                   ApplicationUserId = 1
+                   ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                },
                new Recipe()
                {
@@ -125,7 +125,7 @@ namespace Backend_Capstone.Data
                    Servings = 2,
                    Description = "Salmon is amazing any way you prepare it, but this is one of my favorite ways. Marinate the salmon in a sweet and spicy honey sriracha sauce and cook to perfection. It’s the perfect combination of sweet and spicy and unbelievably easy to prepare.",
                    CuisineId = 4,
-                   ApplicationUserId = 1
+                   ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                }
              );
 
