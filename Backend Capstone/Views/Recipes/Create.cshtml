@@ -85,7 +85,7 @@ new { enctype = "multipart/form-data" }))
                 </div>
                 <div class="form-group">
                     <h5>Cuisine</h5>
-                    <select asp-for="CuisineId" class="form-control input-sm" asp-items="ViewBag.CuisineId"></select>
+                    <select asp-for="CuisineId" class="form-control input-sm" asp-items="ViewBag.CuisineId"><option selected disabled>Select a cuisine</option></select>
                 </div>
                 <div class="form-group input-group-sm" hidden>
                     <input asp-for="ApplicationUserId" class="form-control" />

@@ -41,9 +41,8 @@ namespace Backend_Capstone.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,23 +188,22 @@ namespace Backend_Capstone.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ImageUrl = table.Column<string>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
                     Title = table.Column<string>(maxLength: 55, nullable: false),
                     PrepTime = table.Column<int>(nullable: false),
                     CookTime = table.Column<int>(nullable: false),
                     Servings = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     CuisineId = table.Column<int>(nullable: false),
-                    ApplicationUserId = table.Column<int>(nullable: false),
-                    DateAdded = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
-                    UserId = table.Column<string>(nullable: true)
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    DateAdded = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipe", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipe_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Recipe_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -255,8 +253,8 @@ namespace Backend_Capstone.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "FirstName", "LastName" },
-                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "34842a85-2120-4af7-946d-0f83d726ca22", "ApplicationUser", "shelby@shelby.com", true, false, null, "SHELBY@SHELBY.COM", "SHELBY@SHELBY.COM", "AQAAAAEAACcQAAAAEJtGq6dY9gMqbKZ/Fs9maAToOOhDeLXZfdBuSRvr85IEEQ4iPoHNNR4CKhX0QmNJRg==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "shelby@shelby.com", "Shelby", "Sandlin" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "d46ac282-d061-42a0-8224-f15e2fa40be0", "shelby@shelby.com", true, "Shelby", "Sandlin", false, null, "SHELBY@SHELBY.COM", "SHELBY@SHELBY.COM", "AQAAAAEAACcQAAAAEJ5eHrkV3UGizlkFNnFzYpN0M3XPow8IesyQX0JyPW3m9DCJspfK3OkJE4+hfShTuA==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "shelby@shelby.com" });
 
             migrationBuilder.InsertData(
                 table: "Cuisine",
@@ -277,13 +275,13 @@ namespace Backend_Capstone.Migrations
 
             migrationBuilder.InsertData(
                 table: "Recipe",
-                columns: new[] { "Id", "ApplicationUserId", "CookTime", "CuisineId", "Description", "ImageUrl", "PrepTime", "Servings", "Title", "UserId" },
-                values: new object[] { 1, 1, 20, 5, "A weeknight dinner party is easy with this chicken dinner that’s special enough for company. Pair it with roasted potatoes and steamed broccoli with fresh herbs to satisfy all your guests, even those who eat gluten-free.", "~/images/1567107648779-c20533fc-0c42-4641-99cf-76f4227f6b52.jpg", 15, 4, "Lemon Feta Chicken", null });
+                columns: new[] { "Id", "ApplicationUserId", "CookTime", "CuisineId", "Description", "ImageUrl", "PrepTime", "Servings", "Title" },
+                values: new object[] { 1, "00000000-ffff-ffff-ffff-ffffffffffff", 20, 5, "A weeknight dinner party is easy with this chicken dinner that’s special enough for company. Pair it with roasted potatoes and steamed broccoli with fresh herbs to satisfy all your guests, even those who eat gluten-free.", "~/images/1567107648779-c20533fc-0c42-4641-99cf-76f4227f6b52.jpg", 15, 4, "Lemon Feta Chicken" });
 
             migrationBuilder.InsertData(
                 table: "Recipe",
-                columns: new[] { "Id", "ApplicationUserId", "CookTime", "CuisineId", "Description", "ImageUrl", "PrepTime", "Servings", "Title", "UserId" },
-                values: new object[] { 2, 1, 20, 4, "Salmon is amazing any way you prepare it, but this is one of my favorite ways. Marinate the salmon in a sweet and spicy honey sriracha sauce and cook to perfection. It’s the perfect combination of sweet and spicy and unbelievably easy to prepare.", "~/images/1567095407907-00000000-ffff-ffff-ffff-ffffffffffff.jpg", 10, 2, "Honey Sriracha Salmon", null });
+                columns: new[] { "Id", "ApplicationUserId", "CookTime", "CuisineId", "Description", "ImageUrl", "PrepTime", "Servings", "Title" },
+                values: new object[] { 2, "00000000-ffff-ffff-ffff-ffffffffffff", 20, 4, "Salmon is amazing any way you prepare it, but this is one of my favorite ways. Marinate the salmon in a sweet and spicy honey sriracha sauce and cook to perfection. It’s the perfect combination of sweet and spicy and unbelievably easy to prepare.", "~/images/1567095407907-00000000-ffff-ffff-ffff-ffffffffffff.jpg", 10, 2, "Honey Sriracha Salmon" });
 
             migrationBuilder.InsertData(
                 table: "Ingredient",
@@ -373,9 +371,9 @@ namespace Backend_Capstone.Migrations
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipe_UserId",
+                name: "IX_Recipe_ApplicationUserId",
                 table: "Recipe",
-                column: "UserId");
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
