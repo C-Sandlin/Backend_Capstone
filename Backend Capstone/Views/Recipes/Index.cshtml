@@ -23,7 +23,7 @@
                 <h3 class="card-title" style="margin-bottom: 0px;">@item.Title</h3>
                 <p class="card-text"><small class="text-muted"><i class="fas fa-clock"></i>  Time: @item.TotalTime minutes</small></p>
                 <p class="card-text" style="font-size: 12px;">@item.Description</p>
-                <a asp-controller="Recipes" asp-action="Detail">View Recipe</a>
+                <a asp-controller="Recipes" asp-action="Details" asp-route-id="@item.Id">View Recipe</a>
             </div>
         </div>
     }
