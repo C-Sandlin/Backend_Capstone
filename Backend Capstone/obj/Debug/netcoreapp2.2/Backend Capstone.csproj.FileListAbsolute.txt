@@ -1,0 +1,50 @@
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\appsettings.Development.json
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\appsettings.json
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\libman.json
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\Backend Capstone.deps.json
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\Backend Capstone.runtimeconfig.json
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\Backend Capstone.runtimeconfig.dev.json
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\Backend Capstone.dll
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\Backend Capstone.pdb
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\Backend Capstone.Views.dll
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\bin\Debug\netcoreapp2.2\Backend Capstone.Views.pdb
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.csprojAssemblyReference.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.csproj.CoreCompileInputs.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.RazorAssemblyInfo.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.RazorAssemblyInfo.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.AssemblyInfoInputs.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.AssemblyInfo.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.TagHelpers.input.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.TagHelpers.output.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.RazorCoreGenerate.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Cuisines\Create.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Cuisines\Delete.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Cuisines\Details.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Cuisines\Edit.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Cuisines\Index.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Recipes\Create.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Recipes\Delete.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Recipes\Details.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Recipes\Edit.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Recipes\Index.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.RazorTargetAssemblyInfo.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.RazorTargetAssemblyInfo.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.Views.pdb
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.dll
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.pdb
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.csproj.CopyComplete
