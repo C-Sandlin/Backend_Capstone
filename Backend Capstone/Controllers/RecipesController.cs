@@ -45,7 +45,11 @@ namespace Backend_Capstone.Controllers
             }
 
             var recipe = await _context.Recipe
+                .Include(r => r.User)
+                .Include(r => r.Ingredients)
+                .Include(r => r.Instructions)
                 .FirstOrDefaultAsync(m => m.Id == id);
+                
             if (recipe == null)
             {
                 return NotFound();
