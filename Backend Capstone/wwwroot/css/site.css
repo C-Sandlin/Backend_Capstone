@@ -165,9 +165,10 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .customHr {
-    border-top: 1px dotted black;
-    margin-bottom: 0px;
+    border-top: 2px dotted black;
 }
+
+
 
 .noTopBottomMarg {
     margin-top: 0px;
@@ -176,4 +177,76 @@ h1, h2, h3, h4, h5, h6 {
 
 .text-muted {
     color: #808080 !important;
+}
+
+.cardDetail {
+    margin: auto;
+    height: 130vh;
+    width: 65vw;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 5px rgba(0,0,0,0.1);
+    border: 5px solid #eabb53;
+}
+
+.detailCardImg {
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    margin-left: 50px;
+}
+
+.detailCardTxt {
+    padding: 80px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.shortRow {
+    height: 50vh;
+    overflow: hidden;
+}
+
+.detailImg {
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    margin-top: 20%;
+}
+
+.image-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.greyTxt {
+    color: #b5b5b5;
+    font-size: 10px;
+}
+
+.instructionNum {
+    margin-left: 10px;
+    margin-right: 0px;
+    margin-top: 5px;
+    width: 20px;
+    height: 20px;
+    font-family: 'Prospectus Pro Blk';
+    font-size: 25px;
+}
+
+.col-4, col-1 {
+    padding-right: 0px;
+    margin-right: 0px;
+    object-fit: contain;
+}
+
+p {
+    line-height: 1.5rem;
+}
+
+.font-weight-bold {
+    margin-top: 5px;
+}
+
+.specialCol {
+    padding: 20px;
 }
