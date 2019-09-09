@@ -27,11 +27,11 @@ namespace Backend_Capstone.Controllers
         // GET: All Recipes
         public async Task<IActionResult> Index()
         {
-            
-                var allRecipes = await _context.Recipe
-                                                .Include(r => r.Ingredients)
-                                                .Include(r => r.Instructions)
-                                                .ToListAsync();
+
+            var allRecipes = await _context.Recipe
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .ToListAsync();
             allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
             return View(allRecipes);
         }
@@ -49,7 +49,7 @@ namespace Backend_Capstone.Controllers
                 .Include(r => r.Ingredients)
                 .Include(r => r.Instructions)
                 .FirstOrDefaultAsync(m => m.Id == id);
-                
+
             if (recipe == null)
             {
                 return NotFound();
@@ -95,11 +95,16 @@ namespace Backend_Capstone.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe.FindAsync(id);
+            var recipe = await _context.Recipe
+                                .Include(r => r.User)
+                                .Include(r => r.Ingredients)
+                                .Include(r => r.Instructions)
+                                .FirstOrDefaultAsync(r => r.Id == id);
             if (recipe == null)
             {
                 return NotFound();
             }
+            ViewData["CuisineId"] = new SelectList(_context.Cuisine, "Id", "Title");
             return View(recipe);
         }
 
@@ -108,7 +113,7 @@ namespace Backend_Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
         {
             if (id != recipe.Id)
             {
