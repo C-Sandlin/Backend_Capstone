@@ -68,9 +68,9 @@
                         </div>
                     }
                     <script type="text/javascript">
-                        let count = @Model.Ingredients.Count;
+                        let count = @Model.Ingredients.Count - 1;
                         function getDynamicInput(values) {
-                            return `<div class="row"><div class="col-sm-3"><input type="text" asp-for="Ingredients[${count}].Quantity"   class="form-control" placeholder="Qty"></div > <div class="col-sm-8 input-group"><input type="text" asp-for="Ingredients[${count}].Title"  class="form-control" placeholder="Ingredient Name"><div class="input-group-append"><button class="btn btn-outline-secondary" type="button" onclick="addIngredientInput()" value="Add"><i class="fas fa-plus"></i></button><button class="btn btn-outline-secondary" type="button" onclick="removeIngredientInput(this)" value="Remove"><i class="fas fa-minus"></i></button></div></div></div>`;
+                            return `<div class="row"><div class="col-sm-3"><input type="text" id="Ingredients_${count}__Quantity" name="Ingredients[${count}].Quantity"   class="form-control" placeholder="Qty"></div > <div class="col-sm-8 input-group"><input type="text" id="Ingredients_${count}__Title" name="Ingredients[${count}].Title"  class="form-control" placeholder="Ingredient Name"><div class="input-group-append"><button class="btn btn-outline-secondary" type="button" onclick="addIngredientInput()" value="Add"><i class="fas fa-plus"></i></button><button class="btn btn-outline-secondary" type="button" onclick="removeIngredientInput(this)" value="Remove"><i class="fas fa-minus"></i></button></div></div></div>`;
                         }
 
                         function addIngredientInput() {
