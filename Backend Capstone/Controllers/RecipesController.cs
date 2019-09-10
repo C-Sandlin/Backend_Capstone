@@ -27,11 +27,11 @@ namespace Backend_Capstone.Controllers
         // GET: All Recipes
         public async Task<IActionResult> Index()
         {
-            
-                var allRecipes = await _context.Recipe
-                                                .Include(r => r.Ingredients)
-                                                .Include(r => r.Instructions)
-                                                .ToListAsync();
+
+            var allRecipes = await _context.Recipe
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .ToListAsync();
             allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
             return View(allRecipes);
         }
@@ -49,7 +49,7 @@ namespace Backend_Capstone.Controllers
                 .Include(r => r.Ingredients)
                 .Include(r => r.Instructions)
                 .FirstOrDefaultAsync(m => m.Id == id);
-                
+
             if (recipe == null)
             {
                 return NotFound();
@@ -95,11 +95,16 @@ namespace Backend_Capstone.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe.FindAsync(id);
+            var recipe = await _context.Recipe
+                                .Include(r => r.User)
+                                .Include(r => r.Ingredients)
+                                .Include(r => r.Instructions)
+                                .FirstOrDefaultAsync(r => r.Id == id);
             if (recipe == null)
             {
                 return NotFound();
             }
+            ViewData["CuisineId"] = new SelectList(_context.Cuisine, "Id", "Title");
             return View(recipe);
         }
 
@@ -108,8 +113,16 @@ namespace Backend_Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
         {
+            var fetchedRecipe = await _context.Recipe
+                                .Include(r => r.User)
+                                .Include(r => r.Ingredients)
+                                .Include(r => r.Instructions)
+                                .FirstOrDefaultAsync(r => r.Id == id);
+
+
+
             if (id != recipe.Id)
             {
                 return NotFound();
@@ -117,9 +130,62 @@ namespace Backend_Capstone.Controllers
 
             if (ModelState.IsValid)
             {
+                //this remains same
+                _context.Entry(fetchedRecipe).CurrentValues.SetValues(recipe);
+                
+                // loop through exising ingredients - if match with passed in ingredient, remove the existing ingredient
+                foreach(var existIngredient in fetchedRecipe.Ingredients.ToList())
+                {
+                    if (!recipe.Ingredients.Any(c => c.Id == existIngredient.Id))
+                        _context.Ingredient.Remove(existIngredient);
+                }
+
+                foreach (var existInstruction in fetchedRecipe.Instructions.ToList())
+                {
+                    if (!recipe.Instructions.Any(c => c.Id == existInstruction.Id))
+                        _context.Instruction.Remove(existInstruction);
+                }
+
+
+                foreach (var passedInIngredient in recipe.Ingredients)
+                {
+                    var existingIngredient = fetchedRecipe.Ingredients.Where(i => i.Id == passedInIngredient.Id).SingleOrDefault();
+                    if(existingIngredient != null)
+                    {
+                        _context.Entry(existingIngredient).CurrentValues.SetValues(passedInIngredient);
+                    } else
+                    {
+                        var newIngredient = new Ingredient
+                        {
+                            RecipeId = id,
+                            Quantity = passedInIngredient.Quantity,
+                            Title = passedInIngredient.Title
+                        };
+                        fetchedRecipe.Ingredients.Add(newIngredient);
+                    }
+                }
+
+                foreach (var passedInInstruction in recipe.Instructions)
+                {
+                    var existingInstruction = fetchedRecipe.Instructions.Where(i => i.Id == passedInInstruction.Id).SingleOrDefault();
+                    if (existingInstruction != null)
+                    {
+                        _context.Entry(existingInstruction).CurrentValues.SetValues(passedInInstruction);
+                    }
+                    else
+                    {
+                        var newInstruction = new Instruction
+                        {
+                            RecipeId = id,
+                            InstructionNumber = passedInInstruction.InstructionNumber,
+                            InstructionText = passedInInstruction.InstructionText
+                        };
+                        fetchedRecipe.Instructions.Add(newInstruction);
+                    }
+                }
                 try
                 {
-                    _context.Update(recipe);
+                    //_context.Update(recipe);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

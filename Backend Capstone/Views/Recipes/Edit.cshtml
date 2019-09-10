@@ -4,66 +4,165 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>Recipe</h4>
+
 <hr />
-<div class="row">
+<div class="row justify-content-center align-items-center">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" class="align-self-md-center justify">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                <h5>Image Upload</h5>
+                <label asp-for="ImageUrl" class="control-label">Upload an image(must be in .jpg format)</label><br />
+                <input type="file" name="file" id="file" class="" />
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+            <div class="form-group input-group-sm">
+                <h5>Title</h5>
+                <input asp-for="Title" class="form-control input-sm" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="PrepTime" class="control-label"></label>
-                <input asp-for="PrepTime" class="form-control" />
-                <span asp-validation-for="PrepTime" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h5>Prep Time</h5>
+                        <input type="text" class="form-control" asp-for="PrepTime" placeholder="Minutes">
+                        <span asp-validation-for="PrepTime" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5>Cook Time</h5>
+                        <input type="text" class="form-control" asp-for="CookTime" placeholder="Minutes">
+                        <span asp-validation-for="CookTime" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5>Servings</h5>
+                        <input type="text" class="form-control" asp-for="Servings" placeholder="People">
+                        <span asp-validation-for="Servings" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CookTime" class="control-label"></label>
-                <input asp-for="CookTime" class="form-control" />
-                <span asp-validation-for="CookTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Servings" class="control-label"></label>
-                <input asp-for="Servings" class="form-control" />
-                <span asp-validation-for="Servings" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+            <br />
+            <br />
+            <div class="form-group input-group-sm">
+                <h5>Description</h5>
+                <textarea asp-for="Description" class="form-control  input-sm" placeholder="Tell us why you like this recipe"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="CuisineId" class="control-label"></label>
-                <input asp-for="CuisineId" class="form-control" />
-                <span asp-validation-for="CuisineId" class="text-danger"></span>
+                <h5>Ingredients</h5>
+                
+                <div id="ingredientsDiv">
+                    @for (int i = 0; i < Model.Ingredients.Count; i++)
+                    {
+                    <div class="row">
+                        <input hidden asp-for="Ingredients[i].Id" />
+                        <input hidden asp-for="Ingredients[i].RecipeId" />
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" asp-for="Ingredients[i].Quantity" placeholder="Qty">
+
+                        </div>
+                        <span asp-validation-for="Ingredients[i].Quantity" class="text-danger"></span>
+                        <div class="col-sm-8 input-group">
+                            <input type="text" class="form-control" asp-for="Ingredients[i].Title" placeholder="Ingredient Name">
+                            <span asp-validation-for="Ingredients[i].Title" class="text-danger"></span>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" onclick="addIngredientInput()"><i class="fas fa-plus"></i></button>
+                                @if (i > 0)
+                                {
+                                    <button class="btn btn-outline-secondary" type="button" onclick="removeIngredientInput(this)"><i class="fas fa-minus"></i></button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    <script type="text/javascript">
+                        let count = @Model.Ingredients.Count - 1;
+                        function getDynamicInput(values) {
+                            return `<div class="row"><input hidden asp-for="Ingredients[${count}].Id" /><input hidden name="Ingredients[${count}].RecipeId" value="@Model.Id" /><div class="col-sm-3"><input type="text" id="Ingredients_${count}__Quantity" name="Ingredients[${count}].Quantity"   class="form-control" placeholder="Qty"></div > <div class="col-sm-8 input-group"><input type="text" id="Ingredients_${count}__Title" name="Ingredients[${count}].Title"  class="form-control" placeholder="Ingredient Name"><div class="input-group-append"><button class="btn btn-outline-secondary" type="button" onclick="addIngredientInput()" value="Add"><i class="fas fa-plus"></i></button><button class="btn btn-outline-secondary" type="button" onclick="removeIngredientInput(this)" value="Remove"><i class="fas fa-minus"></i></button></div></div></div>`;
+                        }
+
+                        function addIngredientInput() {
+                            count += 1;
+                            var div = document.createElement('DIV');
+                            div.innerHTML = getDynamicInput("");
+                            document.getElementById("ingredientsDiv").appendChild(div);
+                        }
+
+                        function removeIngredientInput(div) {
+                            count -= 1;
+                            //let x = div.parentElement.parentElement.parentElement;
+                            let x = document.getElementById("ingredientsDiv").lastElementChild.previousElementSibling;
+                            console.log(x);
+                            document.getElementById("ingredientsDiv").removeChild(x);
+                        }
+                    </script>
+                </div>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <h5>Instructions</h5>
+                <div id="instructionsDiv">
+
+                    @if (Model.Instructions.Count > 0)
+                    {
+                        for (int i = 0; i < Model.Instructions.Count; i++)
+                        {
+                            <div class="row">
+                                <input hidden asp-for="Instructions[i].Id" />
+                                <input hidden asp-for="Instructions[i].RecipeId" />
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" asp-for="Instructions[i].InstructionNumber" placeholder="Step #">
+                                </div>
+                                <div class="col-sm-8 input-group">
+                                    <input type="text" class="form-control" asp-for="Instructions[i].InstructionText" placeholder="Ingredient Name">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="addInstructionInput()"><i class="fas fa-plus"></i></button>
+                                        <button class="btn btn-outline-secondary" type="button" onclick="removeInstructionInput(this)"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <script type="text/javascript">
+                        let count2 = @Model.Instructions.Count - 1;
+                        function getDynamicInput2(values) {
+                            return `<div class="row"><input hidden asp-for="Instructions[${count2}].Id" /><input hidden name="Instructions[${count2}].RecipeId" value="@Model.Id" /><div class="col-sm-3"><input type="text"  name="Instructions[${count2}].InstructionNumber"   class="form-control" placeholder="Qty"></div > <div class="col-sm-8 input-group"><input type="text" name="Instructions[${count2}].InstructionText"  class="form-control" placeholder="Ingredient Name"><div class="input-group-append"><button class="btn btn-outline-secondary" type="button" onclick="addInstructionInput()" value="Add"><i class="fas fa-plus"></i></button><button class="btn btn-outline-secondary" type="button" onclick="removeInstructionInput(this)" value="Remove"><i class="fas fa-minus"></i></button></div></div></div>`;
+                        }
+
+                        function addInstructionInput() {
+                            count2 += 1;
+                            var div = document.createElement('DIV');
+                            div.innerHTML = getDynamicInput2("");
+                            document.getElementById("instructionsDiv").appendChild(div);
+                        }
+
+                        function removeInstructionInput(div) {
+                            count2 -= 1;
+                            let y = document.getElementById("instructionsDiv").lastElementChild;
+                            console.log(y);
+                            document.getElementById("instructionsDiv").removeChild(y);
+                        }
+                    </script>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <h5>Cuisine</h5>
+                <select asp-for="CuisineId" class="form-control input-sm" asp-items="ViewBag.CuisineId"></select>
+            </div>
+            <div class="form-group input-group-sm" hidden>
                 <input asp-for="ApplicationUserId" class="form-control" />
-                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-warning" />
             </div>
+            <a asp-action="Index">Back to List</a>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
