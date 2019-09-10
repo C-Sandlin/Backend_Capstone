@@ -115,6 +115,14 @@ namespace Backend_Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
         {
+            var fetchedRecipe = await _context.Recipe
+                                .Include(r => r.User)
+                                .Include(r => r.Ingredients)
+                                .Include(r => r.Instructions)
+                                .FirstOrDefaultAsync(r => r.Id == id);
+
+
+
             if (id != recipe.Id)
             {
                 return NotFound();
@@ -122,9 +130,35 @@ namespace Backend_Capstone.Controllers
 
             if (ModelState.IsValid)
             {
+                _context.Entry(fetchedRecipe).CurrentValues.SetValues(recipe);
+
+                foreach(var existChild in fetchedRecipe.Ingredients.ToList())
+                {
+                    if (!recipe.Ingredients.Any(c => c.Id == existChild.Id))
+                        _context.Ingredient.Remove(existChild);
+                }
+
+                foreach(var ingredient in recipe.Ingredients)
+                {
+                    var existingChild = fetchedRecipe.Ingredients.Where(i => i.Id == ingredient.Id).SingleOrDefault();
+                    if(existingChild != null)
+                    {
+                        _context.Entry(existingChild).CurrentValues.SetValues(ingredient);
+                    } else
+                    {
+                        var newIng = new Ingredient
+                        {
+                            RecipeId = ingredient.RecipeId,
+                            Quantity = ingredient.Quantity,
+                            Title = ingredient.Title
+                        };
+                        fetchedRecipe.Ingredients.Add(newIng);
+                    }
+                }
+
                 try
                 {
-                    _context.Update(recipe);
+                    //_context.Update(recipe);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
