@@ -130,32 +130,59 @@ namespace Backend_Capstone.Controllers
 
             if (ModelState.IsValid)
             {
+                //this remains same
                 _context.Entry(fetchedRecipe).CurrentValues.SetValues(recipe);
-
-                foreach(var existChild in fetchedRecipe.Ingredients.ToList())
+                
+                // loop through exising ingredients - if match with passed in ingredient, remove the existing ingredient
+                foreach(var existIngredient in fetchedRecipe.Ingredients.ToList())
                 {
-                    if (!recipe.Ingredients.Any(c => c.Id == existChild.Id))
-                        _context.Ingredient.Remove(existChild);
+                    if (!recipe.Ingredients.Any(c => c.Id == existIngredient.Id))
+                        _context.Ingredient.Remove(existIngredient);
                 }
 
-                foreach(var ingredient in recipe.Ingredients)
+                foreach (var existInstruction in fetchedRecipe.Instructions.ToList())
                 {
-                    var existingChild = fetchedRecipe.Ingredients.Where(i => i.Id == ingredient.Id).SingleOrDefault();
-                    if(existingChild != null)
+                    if (!recipe.Instructions.Any(c => c.Id == existInstruction.Id))
+                        _context.Instruction.Remove(existInstruction);
+                }
+
+
+                foreach (var passedInIngredient in recipe.Ingredients)
+                {
+                    var existingIngredient = fetchedRecipe.Ingredients.Where(i => i.Id == passedInIngredient.Id).SingleOrDefault();
+                    if(existingIngredient != null)
                     {
-                        _context.Entry(existingChild).CurrentValues.SetValues(ingredient);
+                        _context.Entry(existingIngredient).CurrentValues.SetValues(passedInIngredient);
                     } else
                     {
-                        var newIng = new Ingredient
+                        var newIngredient = new Ingredient
                         {
-                            RecipeId = ingredient.RecipeId,
-                            Quantity = ingredient.Quantity,
-                            Title = ingredient.Title
+                            RecipeId = id,
+                            Quantity = passedInIngredient.Quantity,
+                            Title = passedInIngredient.Title
                         };
-                        fetchedRecipe.Ingredients.Add(newIng);
+                        fetchedRecipe.Ingredients.Add(newIngredient);
                     }
                 }
 
+                foreach (var passedInInstruction in recipe.Instructions)
+                {
+                    var existingInstruction = fetchedRecipe.Instructions.Where(i => i.Id == passedInInstruction.Id).SingleOrDefault();
+                    if (existingInstruction != null)
+                    {
+                        _context.Entry(existingInstruction).CurrentValues.SetValues(passedInInstruction);
+                    }
+                    else
+                    {
+                        var newInstruction = new Instruction
+                        {
+                            RecipeId = id,
+                            InstructionNumber = passedInInstruction.InstructionNumber,
+                            InstructionText = passedInInstruction.InstructionText
+                        };
+                        fetchedRecipe.Instructions.Add(newInstruction);
+                    }
+                }
                 try
                 {
                     //_context.Update(recipe);
