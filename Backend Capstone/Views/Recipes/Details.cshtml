@@ -1,10 +1,21 @@
-﻿@model Backend_Capstone.Models.Recipe
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model Backend_Capstone.Models.Recipe
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <hr />
+@{
+    var user = await UserManager.GetUserAsync(User);
+    if (Model.User.Id == user.Id)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }
+}
 <div>
     <div class="cardDetail container">
         <div class="row shortRow">
@@ -59,7 +70,7 @@
                         <div class="col">
                             <p style="padding-top: 4px;">@ing.Title</p>
                         </div>
-                 
+
                     </div>
                 }
             </div>
@@ -92,6 +103,5 @@
     </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
