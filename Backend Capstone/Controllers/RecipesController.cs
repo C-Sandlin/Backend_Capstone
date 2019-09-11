@@ -41,6 +41,36 @@ namespace Backend_Capstone.Controllers
             return View(allRecipes);
         }
 
+        // GET: my recipes
+        public async Task<IActionResult> MyRecipes()
+        {
+            var user = await GetCurrentUserAsync();
+
+            var myRecipes = await _context.Recipe
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .Where(r => r.User.Id == user.Id)
+                                            .ToListAsync();
+            myRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
+            return View(myRecipes);
+        }
+
+        // GET: most recent
+        public async Task<IActionResult> RecentRecipes()
+        {
+            var user = await GetCurrentUserAsync();
+
+            var myRecipes = await _context.Recipe
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .OrderByDescending(r => r.DateAdded)
+                                            .Take(5)
+                                            .ToListAsync();
+            myRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
+            return View(myRecipes);
+        }
+
+
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(int? id)
         {

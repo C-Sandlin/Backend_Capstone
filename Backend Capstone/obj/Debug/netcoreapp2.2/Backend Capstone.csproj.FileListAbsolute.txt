@@ -48,3 +48,5 @@ C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2
 C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.pdb
 C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.csproj.CopyComplete
 C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Backend Capstone.csprojAssemblyReference.cache
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Recipes\MyRecipes.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Recipes\RecentRecipes.cshtml.g.cs
