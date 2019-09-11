@@ -70,6 +70,8 @@ namespace Backend_Capstone.Controllers
             return View(myRecipes);
         }
 
+        
+
 
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(int? id)

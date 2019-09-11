@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Backend_Capstone.Models.Favorite>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    <hr />
+    <h1 class="mainContainer">My Favorites</h1>
+</div>
+
+<div class="d-flex overflow-auto flex-wrap justify-content-center">
+    <div class="col-11 d-flex flex-wrap">
+        @foreach (var item in Model)
+        {
+            <div id="@item.Recipe.Id" class="card gridCard">
+                <div class="card-body overflow-hidden">
+                    <img class="card-img-top" src="@Url.Content(item.Recipe.ImageUrl)" />
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title" style="margin-bottom: 0px;">@item.Recipe.Title</h3>
+                    <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @item.Recipe.TotalTime minutes</small></p>
+                    <p class="card-text text-muted" style="font-size: 12px;">@item.Recipe.Description</p>
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@item.Id">View Recipe</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
