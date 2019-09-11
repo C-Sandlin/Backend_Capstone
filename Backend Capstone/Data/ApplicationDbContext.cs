@@ -19,6 +19,7 @@ namespace Backend_Capstone.Data
         public DbSet<Instruction> Instruction { get; set; }
         public DbSet<MealPlan> MealPlan { get; set; }
         public DbSet<Recipe> Recipe { get; set; }
+        public DbSet<Favorite> Favorite { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -302,6 +303,21 @@ namespace Backend_Capstone.Data
                    Title = "chopped scallions"
                }
             );
+
+            modelBuilder.Entity<Favorite>().HasData(
+               new Favorite()
+               {
+                   Id = 1,
+                   RecipeId = 1,
+                   ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+               },
+               new Favorite()
+               {
+                   Id = 2,
+                   RecipeId = 29,
+                   ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+               }
+               );
         }
     }
 }
