@@ -4,14 +4,16 @@ using Backend_Capstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Backend_Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190911154030_FavoritesTable")]
+    partial class FavoritesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +82,7 @@ namespace Backend_Capstone.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d0b4304-654a-4f80-9dcf-95754f946dca",
+                            ConcurrencyStamp = "15b74bb9-d3ad-4cf1-aaa3-777d66ae0cff",
                             Email = "shelby@shelby.com",
                             EmailConfirmed = true,
                             FirstName = "Shelby",
@@ -88,7 +90,7 @@ namespace Backend_Capstone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SHELBY@SHELBY.COM",
                             NormalizedUserName = "SHELBY@SHELBY.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOs9Ir3e/NZDqpmv7IFbe/z2ClJaF9cr9v0SRV2dPK80130YyAyLn44ZnQmL41Z9bA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPVubhK3ytUWtYRhByyBf0ntnmlWEYMAtafnaUq3TWrCQ2jrrimmGAdtThsTKGewKQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,

@@ -20,9 +20,9 @@ namespace Backend_Capstone.Models
         public string LastName { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Recipe> FavoriteRecipes { get; set; }
+        public virtual List<Favorite> FavoriteRecipes { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Recipe> WeeklyRecipes { get; set; }
+        public virtual List<Recipe> WeeklyRecipes { get; set; }
     }
 }
