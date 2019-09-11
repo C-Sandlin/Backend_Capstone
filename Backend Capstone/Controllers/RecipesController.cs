@@ -81,6 +81,17 @@ namespace Backend_Capstone.Controllers
                 return NotFound();
             }
 
+            var user = await GetCurrentUserAsync();
+            var favRecipes = await _context.Favorite
+                                           .Include(fav => fav.Recipe)
+                                               .ThenInclude(r => r.Ingredients)
+                                           .Include(f => f.Recipe)
+                                               .ThenInclude(r => r.Instructions)
+                                           .Where(f => f.ApplicationUserId == user.Id)
+                                           .ToListAsync();
+
+            user.FavoriteRecipes = favRecipes;
+
             var recipe = await _context.Recipe
                 .Include(r => r.User)
                 .Include(r => r.Ingredients)

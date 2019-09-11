@@ -21,7 +21,7 @@
                     <h3 class="card-title" style="margin-bottom: 0px;">@item.Recipe.Title</h3>
                     <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @item.Recipe.TotalTime minutes</small></p>
                     <p class="card-text text-muted" style="font-size: 12px;">@item.Recipe.Description</p>
-                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@item.Id">View Recipe</a>
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@item.RecipeId">View Recipe</a>
                 </div>
             </div>
         }
