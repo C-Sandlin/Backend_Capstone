@@ -10,15 +10,23 @@
 
 <hr />
 @{
+    <a asp-action="Index"><i class="fas fa-arrow-left"></i>   Back</a>
+    <br />
+    <br />
+    <br />
     var user = await UserManager.GetUserAsync(User);
     if (Model.User.Id == user.Id)
     {
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" style="color: #eabb53"><i class="fas fa-pen-square"></i>   Edit</a>
         <br />
-        <a asp-action="Delete" asp-route-id="@Model.Id" style="color: red;">Delete</a>
+        <br />
+        <a asp-action="Delete" asp-route-id="@Model.Id" style="color: #ff6961;"><i class="fas fa-minus-square"></i>   Delete</a>
     }
+
+
 }
 <div>
+
     <div class="cardDetail container">
         <div class="row shortRow">
             <div class="col-5">
@@ -100,6 +108,4 @@
 
     </div>
 </div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+

@@ -10,6 +10,9 @@ using Backend_Capstone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace Backend_Capstone.Controllers
 {
@@ -17,9 +20,11 @@ namespace Backend_Capstone.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHostingEnvironment _env;
 
-        public RecipesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public RecipesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHostingEnvironment env)
         {
+            _env = env;
             _context = context;
             _userManager = userManager;
         }
@@ -62,7 +67,7 @@ namespace Backend_Capstone.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["CuisineId"] = new SelectList(_context.Cuisine, "Id", "Title");
+            ViewData["CuisineId"] = new SelectList(_context.Cuisine.OrderBy(c => c.Title), "Id", "Title");
             return View();
         }
 
@@ -71,7 +76,7 @@ namespace Backend_Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe, IFormFile file)
         {
             var user = await GetCurrentUserAsync();
 
@@ -79,11 +84,21 @@ namespace Backend_Capstone.Controllers
             if (ModelState.IsValid)
             {
                 recipe.ApplicationUserId = user.Id;
+
+                try
+                {
+                    recipe.ImageUrl = await SaveFile(file, user.Id);
+                }
+                catch (Exception ex)
+                {
+                    return NotFound();
+                }
+
                 _context.Add(recipe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CuisineId"] = new SelectList(_context.Cuisine, "Id", "Title");
+            ViewData["CuisineId"] = new SelectList(_context.Cuisine.OrderBy(c => c.Title), "Id", "Title");
             return View(recipe);
         }
 
@@ -104,7 +119,7 @@ namespace Backend_Capstone.Controllers
             {
                 return NotFound();
             }
-            ViewData["CuisineId"] = new SelectList(_context.Cuisine, "Id", "Title");
+            ViewData["CuisineId"] = new SelectList(_context.Cuisine.OrderBy(c => c.Title), "Id", "Title");
             return View(recipe);
         }
 
@@ -115,13 +130,12 @@ namespace Backend_Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
         {
+            var user = await GetCurrentUserAsync();
             var fetchedRecipe = await _context.Recipe
                                 .Include(r => r.User)
                                 .Include(r => r.Ingredients)
                                 .Include(r => r.Instructions)
                                 .FirstOrDefaultAsync(r => r.Id == id);
-
-
 
             if (id != recipe.Id)
             {
@@ -239,5 +253,38 @@ namespace Backend_Capstone.Controllers
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+        private async Task<string> SaveFile(IFormFile file, string userId)
+        {
+            if (file.Length > 5242880) throw new Exception("File too large!");
+            var ext = GetMimeType(file.FileName);
+            if (ext == null) throw new Exception("Invalid file type");
+            var epoch = new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds();
+            var fileName = $"{epoch}-{userId}.{ext}";
+            var webRoot = _env.WebRootPath;
+            var absoluteFilePath = Path.Combine(
+                webRoot,
+                "images",
+                fileName);
+            string relFilePath = null;
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(absoluteFilePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    relFilePath = $"~/images/{fileName}";
+                };
+            }
+            return relFilePath;
+        }
+        private string GetMimeType(string fileName)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            provider.TryGetContentType(fileName, out contentType);
+            if (contentType == "image/jpeg") contentType = "jpg";
+            else contentType = null;
+            return contentType;
+        }
     }
 }
