@@ -5,6 +5,7 @@
 }
 
 
+
 <div class="text-center">
     <hr />
     <h1 class="mainContainer">All Recipes</h1>
@@ -13,21 +14,21 @@
 
 <div class="d-flex overflow-auto flex-wrap justify-content-center">
     <div class="col-11 d-flex flex-wrap">
-    @foreach (var item in Model)
-    {
-        <div id="@item.Id" class="card gridCard">
-            <div class="card-body overflow-hidden">
-                <img class="card-img-top" src="@Url.Content(item.ImageUrl)" />
+        @foreach (var item in Model)
+        {
+            <div id="@item.Id" class="card gridCard">
+                <div class="card-body overflow-hidden">
+                    <img class="card-img-top" src="@Url.Content(item.ImageUrl)" />
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title" style="margin-bottom: 0px;">@item.Title</h3>
+                    <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @item.TotalTime minutes</small></p>
+                    <p class="card-text text-muted" style="font-size: 12px;">@item.Description</p>
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@item.Id">View Recipe</a>
+                </div>
             </div>
-            <div class="card-body">
-                <h3 class="card-title" style="margin-bottom: 0px;">@item.Title</h3>
-                <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @item.TotalTime minutes</small></p>
-                <p class="card-text text-muted" style="font-size: 12px;">@item.Description</p>
-                <a asp-controller="Recipes" asp-action="Details" asp-route-id="@item.Id">View Recipe</a>
-            </div>
-        </div>
-    }
-        </div>
+        }
+    </div>
 </div>
 
 

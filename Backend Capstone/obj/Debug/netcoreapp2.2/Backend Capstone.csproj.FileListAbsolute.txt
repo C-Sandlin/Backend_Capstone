@@ -55,3 +55,8 @@ C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2
 C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Favorites\Details.cshtml.g.cs
 C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Favorites\Edit.cshtml.g.cs
 C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\Favorites\Index.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\MealPlans\Create.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\MealPlans\Delete.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\MealPlans\Details.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\MealPlans\Edit.cshtml.g.cs
+C:\Users\colin\workspace\Backend Capstone\Backend Capstone\obj\Debug\netcoreapp2.2\Razor\Views\MealPlans\Index.cshtml.g.cs
