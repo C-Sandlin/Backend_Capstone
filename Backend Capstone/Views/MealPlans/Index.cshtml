@@ -11,15 +11,15 @@
 @{
     var user = await UserManager.GetUserAsync(User);
 }
-
-
-<div class="text-center">
-    <hr />
-    <h1 class="mainContainer">Weekly Meal Plan</h1>
-</div>
+    <div class="text-center">
+        <hr />
+        <h1 class="mainContainer">Weekly Meal Plan</h1>
+        <form asp-action="DeleteAll" asp-controller="MealPlans">
+            <input class="btn btn-warning btn-sm" type="submit" value="Clear The Meal Planner" />
+        </form>
+    </div>
 <br />
 <br />
-
 <div class="d-flex overflow-auto flex-wrap justify-content-center">
     <div class="col-12 d-flex flex-wrap">
 
