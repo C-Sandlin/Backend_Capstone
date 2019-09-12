@@ -22,8 +22,9 @@
 
 <div class="d-flex overflow-auto flex-wrap justify-content-center">
     <div class="col-12 d-flex flex-wrap">
+
         <div class="col">
-            <h3 class="text-black-50 text-center">Sunday</h3>
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Sunday</p>
             <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Sunday"))
@@ -34,10 +35,16 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
@@ -49,21 +56,29 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <p>No recipe selected.</p>
+                    <p class="text-center">No recipe selected.</p>
                 }
             }
         </div>
+
         <div class="col">
-            <h3 class="text-black-50 text-center">Monday</h3>
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Monday</p>
             <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Monday"))
@@ -74,10 +89,16 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
@@ -89,21 +110,29 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <p>No recipe selected.</p>
+                    <p class="text-center">No recipe selected.</p>
                 }
             }
         </div>
+
         <div class="col">
-            <h3 class="text-black-50 text-center">Tuesday</h3>
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Tuesday</p>
             <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Tuesday"))
@@ -114,10 +143,16 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
@@ -129,21 +164,29 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <p>No recipe selected.</p>
+                    <p class="text-center">No recipe selected.</p>
                 }
             }
         </div>
+
         <div class="col">
-            <h3 class="text-black-50 text-center">Wednesday</h3>
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Wednesday</p>
             <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Wednesday"))
@@ -154,10 +197,16 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
@@ -169,21 +218,29 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <p>No recipe selected.</p>
+                    <p class="text-center">No recipe selected.</p>
                 }
             }
         </div>
+
         <div class="col">
-            <h3 class="text-black-50 text-center">Thursday</h3>
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Thursday</p>
             <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Thursday"))
@@ -194,10 +251,16 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
@@ -209,21 +272,29 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <p>No recipe selected.</p>
+                    <p class="text-center">No recipe selected.</p>
                 }
             }
         </div>
+
         <div class="col">
-            <h3 class="text-black-50 text-center">Friday</h3>
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Friday</p>
             <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Friday"))
@@ -234,10 +305,16 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
@@ -249,21 +326,29 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <p>No recipe selected.</p>
+                    <p class="text-center">No recipe selected.</p>
                 }
             }
         </div>
+
         <div class="col">
-            <h3 class="text-black-50 text-center">Saturday</h3>
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Saturday</p>
             <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Saturday"))
@@ -274,10 +359,16 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
@@ -289,16 +380,23 @@
                             <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
                         <div class="card-body" style="padding: 8px;">
-                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-
-                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 }
                 else
                 {
-                    <p>No recipe selected.</p>
+                    <p class="text-center">No recipe selected.</p>
                 }
             }
         </div>
