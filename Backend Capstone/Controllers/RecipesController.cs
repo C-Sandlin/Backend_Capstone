@@ -70,7 +70,7 @@ namespace Backend_Capstone.Controllers
             return View(myRecipes);
         }
 
-        
+
 
 
         // GET: Recipes/Details/5
@@ -189,9 +189,10 @@ namespace Backend_Capstone.Controllers
             {
                 //this remains same
                 _context.Entry(fetchedRecipe).CurrentValues.SetValues(recipe);
-                
+
                 // loop through exising ingredients - if match with passed in ingredient, remove the existing ingredient
-                foreach(var existIngredient in fetchedRecipe.Ingredients.ToList())
+                // if new recipe being passed in does not have an ingredient the old one had, you have removed it during edit process, so remove from object.
+                foreach (var existIngredient in fetchedRecipe.Ingredients.ToList())
                 {
                     if (!recipe.Ingredients.Any(c => c.Id == existIngredient.Id))
                         _context.Ingredient.Remove(existIngredient);
@@ -207,10 +208,11 @@ namespace Backend_Capstone.Controllers
                 foreach (var passedInIngredient in recipe.Ingredients)
                 {
                     var existingIngredient = fetchedRecipe.Ingredients.Where(i => i.Id == passedInIngredient.Id).SingleOrDefault();
-                    if(existingIngredient != null)
+                    if (existingIngredient != null)
                     {
                         _context.Entry(existingIngredient).CurrentValues.SetValues(passedInIngredient);
-                    } else
+                    }
+                    else
                     {
                         var newIngredient = new Ingredient
                         {

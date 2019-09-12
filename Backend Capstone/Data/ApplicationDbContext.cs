@@ -318,6 +318,23 @@ namespace Backend_Capstone.Data
                    ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                }
                );
+
+            modelBuilder.Entity<MealPlan>().HasData(
+              new MealPlan()
+              {
+                  Id = 1,
+                  RecipeId = 1,
+                  DayOfWeek = "Monday",
+                  ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+              },
+              new MealPlan()
+              {
+                  Id = 2,
+                  RecipeId = 2,
+                  DayOfWeek = "Wednesday",
+                  ApplicationUserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+              }
+              );
         }
     }
 }
