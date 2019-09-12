@@ -31,15 +31,46 @@ namespace Backend_Capstone.Controllers
         }
 
         // GET: All Recipes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string userInput)
         {
+            var userInputNotEmpty = !String.IsNullOrEmpty(userInput);
+            if (userInputNotEmpty)
+            {
+                var allRecipes = await _context.Recipe
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .Where(r => r.Title.Contains(userInput) ||
+                                                        r.Description.Contains(userInput) ||
+                                                        r.User.FirstName.Contains(userInput) ||
+                                                        r.User.LastName.Contains(userInput))
+                                            .ToListAsync();
 
-            var allRecipes = await _context.Recipe
+
+                var ingredients = _context.Ingredient
+                                                .Include(i => i.Recipe)
+                                                .AsQueryable();
+
+                if (allRecipes.Count == 0 || ingredients.Any(i => i.Title.Contains(userInput)))
+                {
+                    allRecipes = ingredients.Where(i => i.Title.Contains(userInput))
+                                            .Select(i => i.Recipe)
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .ToList();
+                };
+                allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
+                return View(allRecipes);
+            
+            }
+            else
+            {
+                var allRecipes = await _context.Recipe
                                             .Include(r => r.Ingredients)
                                             .Include(r => r.Instructions)
                                             .ToListAsync();
-            allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
-            return View(allRecipes);
+                allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
+                return View(allRecipes);
+            }
         }
 
         // GET: my recipes
@@ -135,13 +166,16 @@ namespace Backend_Capstone.Controllers
             {
                 recipe.ApplicationUserId = user.Id;
 
-                try
+                if (file != null)
                 {
-                    recipe.ImageUrl = await SaveFile(file, user.Id);
-                }
-                catch (Exception ex)
-                {
-                    return NotFound();
+                    try
+                    {
+                        recipe.ImageUrl = await SaveFile(file, user.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        return NotFound();
+                    }
                 }
 
                 _context.Add(recipe);
