@@ -45,44 +45,30 @@ namespace Backend_Capstone.Controllers
             return View(user);
         }
 
-        // GET: MealPlans/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var mealPlan = await _context.MealPlan
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (mealPlan == null)
-            {
-                return NotFound();
-            }
-
-            return View(mealPlan);
-        }
-
-        // GET: MealPlans/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: MealPlans/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DayOfWeek,RecipeId,ApplicationUserId")] MealPlan mealPlan)
+        public async Task<IActionResult> Create([Bind("Id,DayOfWeek,RecipeId,ApplicationUserId")] int id, string dayOfWeek)
         {
+
+            var user = await GetCurrentUserAsync();
+
+            var newMP = new MealPlan()
+            {
+                ApplicationUserId = user.Id,
+                RecipeId = id,
+                DayOfWeek = dayOfWeek
+            };
+
             if (ModelState.IsValid)
             {
-                _context.Add(mealPlan);
+                _context.Add(newMP);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(mealPlan);
+            return View();
         }
 
         // GET: MealPlans/Edit/5
