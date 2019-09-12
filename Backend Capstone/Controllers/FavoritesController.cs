@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Backend_Capstone.Data;
 using Backend_Capstone.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_Capstone.Controllers
 {
+    [Authorize]
     public class FavoritesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +25,7 @@ namespace Backend_Capstone.Controllers
             _userManager = userManager;
         }
 
+        
         // GET: Favorites
         public async Task<IActionResult> Index()
         {

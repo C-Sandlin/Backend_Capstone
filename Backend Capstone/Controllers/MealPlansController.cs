@@ -8,18 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using Backend_Capstone.Data;
 using Backend_Capstone.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_Capstone.Controllers
 {
+    [Authorize]
     public class MealPlansController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        
+
 
         public MealPlansController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-           
+
             _context = context;
             _userManager = userManager;
         }
@@ -85,6 +87,20 @@ namespace Backend_Capstone.Controllers
         private bool MealPlanExists(int id)
         {
             return _context.MealPlan.Any(e => e.Id == id);
+        }
+
+        // POST: MealPlans/Delete/5
+        [HttpPost, ActionName("DeleteAll")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAll()
+        {
+            var user = await GetCurrentUserAsync();
+
+            var mealPlan = await _context.MealPlan.Where(mp => mp.ApplicationUserId == user.Id).ToListAsync();
+            _context.MealPlan.RemoveRange(mealPlan);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
