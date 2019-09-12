@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.StaticFiles;
 
 namespace Backend_Capstone.Controllers
 {
+    [Authorize]
     public class RecipesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -89,6 +90,12 @@ namespace Backend_Capstone.Controllers
                                                .ThenInclude(r => r.Instructions)
                                            .Where(f => f.ApplicationUserId == user.Id)
                                            .ToListAsync();
+
+            var userMealPlan = await _context.MealPlan
+                                             .Where(mp => mp.ApplicationUserId == user.Id)
+                                             .Include(mp => mp.Recipe)
+                                             .ToListAsync();
+            user.WeeklyRecipes = userMealPlan;
 
             user.FavoriteRecipes = favRecipes;
 
