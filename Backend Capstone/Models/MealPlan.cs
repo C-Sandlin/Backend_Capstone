@@ -16,5 +16,9 @@ namespace Backend_Capstone.Models
 
         [Required]
         public int RecipeId { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public virtual Recipe Recipe { get; set; }
     }
 }

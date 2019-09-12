@@ -1,0 +1,404 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model Backend_Capstone.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+
+<div class="text-center">
+    <hr />
+    <h1 class="mainContainer">Weekly Meal Plan</h1>
+</div>
+<br />
+<br />
+
+<div class="d-flex overflow-auto flex-wrap justify-content-center">
+    <div class="col-12 d-flex flex-wrap">
+
+        <div class="col">
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Sunday</p>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Sunday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Sunday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Sunday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Sunday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">No recipe selected.</p>
+                }
+            }
+        </div>
+
+        <div class="col">
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Monday</p>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Monday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Monday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Monday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Monday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">No recipe selected.</p>
+                }
+            }
+        </div>
+
+        <div class="col">
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Tuesday</p>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Tuesday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Tuesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Tuesday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Tuesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">No recipe selected.</p>
+                }
+            }
+        </div>
+
+        <div class="col">
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Wednesday</p>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Wednesday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Wednesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Wednesday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Wednesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">No recipe selected.</p>
+                }
+            }
+        </div>
+
+        <div class="col">
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Thursday</p>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Thursday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Thursday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Thursday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Thursday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">No recipe selected.</p>
+                }
+            }
+        </div>
+
+        <div class="col">
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Friday</p>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Friday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Friday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Friday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Friday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">No recipe selected.</p>
+                }
+            }
+        </div>
+
+        <div class="col">
+            <p class="text-black-50 text-center font-weight-bolder" style="font-size: 20px;">Saturday</p>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Saturday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Saturday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-start" style="margin-left: 0px;">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Saturday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Saturday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h6 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h6>
+                            <p class="card-text font-weight-bold text-warning" style="margin-bottom: 0px;"><small class=" font-weight-bold text-warning"><i class="fas fa-star text-warning"></i>   Shelby's Suggestion</small></p>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  @selected.Recipe.TotalTime minutes</small></p>
+                            <div class="row justify-content-sm-center">
+                                <form asp-action="Details" asp-controller="Recipes" asp-route-id="@selected.Recipe.Id" style="margin-right: 3px;">
+                                    <input class="btn btn-outline-warning btn-sm" type="submit" value="View" />
+                                </form>
+                                <form asp-action="Delete" asp-controller="MealPlans" asp-route-id="@selected.Id" style="margin-left: 3px;">
+                                    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center">No recipe selected.</p>
+                }
+            }
+        </div>
+    </div>
+</div>

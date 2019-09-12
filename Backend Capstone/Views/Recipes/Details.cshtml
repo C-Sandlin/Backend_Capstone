@@ -9,126 +9,142 @@
 }
 
 <hr />
-@{
-    var user = await UserManager.GetUserAsync(User);
-    <a asp-action="Index"><i class="fas fa-arrow-left"></i>   Back</a>
-    <br />
-    <br />
+<div class="row">
+    @{
+        var user = await UserManager.GetUserAsync(User);
+        if (user.Id != null)
+        {
 
-    if (!user.FavoriteRecipes.Any(r => r.Recipe.Id == Model.Id))
-    {
-        <form asp-action="AddFavorite" asp-controller="Favorites" asp-route-id="@Model.Id">
-            <input class="btn btn-primary btn-sm" type="submit" value="Favorite" />
-        </form>
-        <br />
-    }
+            <div class="col-2">
 
-
-    
-
-    if (user.FavoriteRecipes.Any(r => r.Recipe.Id == Model.Id))
-    {
-        <form asp-action="RemoveFavorite" asp-controller="Favorites" asp-route-id="@Model.Id">
-            <input class="btn btn-primary btn-sm" type="submit" value="Unfavorite" />
-        </form>
-        <br />
-    }
-
-
-    if (Model.ApplicationUserId == user.Id)
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Id" style="color: #eabb53"><i class="fas fa-pen-square"></i>   Edit</a>
-        <br />
-        <br />
-        <a asp-action="Delete" asp-route-id="@Model.Id" style="color: #ff6961;"><i class="fas fa-minus-square"></i>   Delete</a>
-    }
-    <br />
-    <br />
-
-
-
-}
-<div>
-
-    <div class="cardDetail container">
-        <div class="row shortRow">
-            <div class="col-5">
-                <div class="detailCardImg overflow-hidden">
-                    <img src="@Url.Content(Model.ImageUrl)" class="smallCardImage detailImg" />
-                </div>
-            </div>
-            <div class="col detailCardTxt">
-                <h1>@Model.Title</h1>
-                <p class="greyTxt"><i class="fas fa-user"></i>   @Model.User.FirstName @Model.User.LastName</p>
-                <hr class="customHr" style="margin-bottom: 0px;" />
-                <div class="row">
-                    <div class="col  text-center" style="padding: 10px;">
-                        <p style="margin-bottom: 0px;">Prep Time:</p>
-                        <h4>@Model.PrepTime min</h4>
-                    </div>
-                    <div class="col  text-center" style="padding: 10px;">
-                        <p style="margin-bottom: 0px;">Cook Time:</p>
-                        <h4>@Model.CookTime min</h4>
-                    </div>
-                    <div class="col text-center" style="padding: 10px;">
-                        <p style="margin-bottom: 0px;">Serves:</p>
-                        <h4>@Model.Servings people</h4>
-                    </div>
-                </div>
-                <hr class="customHr" style="margin-top: 0px;" />
-                <br />
-                <p>@Model.Description</p>
-            </div>
-        </div>
-        <hr class="customHr" />
-        <div class="row" style="padding: 80px; padding-left: 20px;">
-            <div class="col-5">
-                <div class="row">
-                    <div class="col-4">
-                        <p></p>
-                    </div>
-                    <div class="col specialCol">
-                        <h3>Ingredients</h3>
-                    </div>
-                </div>
-                @foreach (var ing in Model.Ingredients)
+                <a asp-action="Index"><i class="fas fa-arrow-left"></i>   Back</a>
+                @if (Model.ApplicationUserId == user.Id)
                 {
-                    <div class="row">
-                        <div class="col-4 text-right">
-                            <p class="font-weight-bold">@ing.Quantity</p>
-                        </div>
-                        <div class="col">
-                            <p style="padding-top: 4px;">@ing.Title</p>
-                        </div>
+                    <hr />
+                    <a asp-action="Edit" asp-route-id="@Model.Id" style="color: #eabb53;"><i class="fas fa-pen-square"></i>   Edit</a>
+                    <hr />
+                    <a asp-action="Delete" asp-route-id="@Model.Id" style="color: #ff6961;"><i class="fas fa-minus-square"></i>   Delete</a>
+                    <hr />
 
-                    </div>
                 }
-            </div>
-            <div class="col specialCol">
-                <div class="row">
-                    <div class="col-1">
-                        <p> </p>
+
+
+                @if (!user.FavoriteRecipes.Any(r => r.Recipe.Id == Model.Id))
+                {
+                    <form asp-action="AddFavorite" asp-controller="Favorites" asp-route-id="@Model.Id" style="margin-top:0px;">
+                        <input class="btn btn-primary btn-sm" type="submit" value="Favorite" />
+                    </form>
+                    <hr />
+                }
+
+                @if (user.FavoriteRecipes.Any(r => r.Recipe.Id == Model.Id))
+                {
+                    <form asp-action="RemoveFavorite" asp-controller="Favorites" asp-route-id="@Model.Id">
+                        <input class="btn btn-primary btn-sm" type="submit" value="Unfavorite" />
+                    </form>
+                    <hr />
+                }
+
+                <form asp-action="Create" asp-controller="MealPlans" asp-route-id="@Model.Id">
+                    <div class="form-group">
+                        <select asp-for="CuisineId" class="form-control input-sm" name="dayOfWeek" asp-items="ViewBag.CuisineId">
+                            <option selected disabled>Select day</option>
+                            <option value="Sunday">Sunday</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
                     </div>
-                    <div class="col">
-                        <h3>Instructions</h3>
+                    <input class="btn btn-primary btn-sm" type="submit" value="Add To Meal Plan" />
+                </form>
+                <br />
+            </div>
+        }
+    }
+    <div>
+        <div class="cardDetail container">
+            <div class="row shortRow">
+                <div class="col-5">
+                    <div class="detailCardImg overflow-hidden">
+                        <img src="@Url.Content(Model.ImageUrl)" class="smallCardImage detailImg" />
                     </div>
                 </div>
-                @foreach (var inst in Model.Instructions)
-                {
+                <div class="col detailCardTxt">
+                    <h1>@Model.Title</h1>
+                    <p class="greyTxt"><i class="fas fa-user"></i>   @Model.User.FirstName @Model.User.LastName</p>
+                    <hr class="customHr" style="margin-bottom: 0px;" />
+                    <div class="row">
+                        <div class="col  text-center" style="padding: 10px;">
+                            <p style="margin-bottom: 0px;">Prep Time:</p>
+                            <h4>@Model.PrepTime min</h4>
+                        </div>
+                        <div class="col  text-center" style="padding: 10px;">
+                            <p style="margin-bottom: 0px;">Cook Time:</p>
+                            <h4>@Model.CookTime min</h4>
+                        </div>
+                        <div class="col text-center" style="padding: 10px;">
+                            <p style="margin-bottom: 0px;">Serves:</p>
+                            <h4>@Model.Servings people</h4>
+                        </div>
+                    </div>
+                    <hr class="customHr" style="margin-top: 0px;" />
+                    <br />
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+            <hr class="customHr" />
+            <div class="row" style="padding: 80px; padding-left: 20px;">
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-4">
+                            <p></p>
+                        </div>
+                        <div class="col specialCol">
+                            <h3>Ingredients</h3>
+                        </div>
+                    </div>
+                    @foreach (var ing in Model.Ingredients)
+                    {
+                        <div class="row">
+                            <div class="col-4 text-right">
+                                <p class="font-weight-bold">@ing.Quantity</p>
+                            </div>
+                            <div class="col">
+                                <p style="padding-top: 4px;">@ing.Title</p>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+                <div class="col specialCol">
                     <div class="row">
                         <div class="col-1">
-                            <p class="instructionNum">@inst.InstructionNumber</p>
+                            <p> </p>
                         </div>
                         <div class="col">
-                            <p style="padding-top: 4px;">@inst.InstructionText</p>
+                            <h3>Instructions</h3>
                         </div>
                     </div>
-                }
+                    @foreach (var inst in Model.Instructions)
+                    {
+                        <div class="row">
+                            <div class="col-1">
+                                <p class="instructionNum">@inst.InstructionNumber</p>
+                            </div>
+                            <div class="col">
+                                <p style="padding-top: 4px;">@inst.InstructionText</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
             </div>
 
-
         </div>
-
     </div>
 </div>
 
