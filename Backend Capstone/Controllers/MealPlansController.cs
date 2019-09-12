@@ -35,6 +35,13 @@ namespace Backend_Capstone.Controllers
                                              .Include(mp => mp.Recipe)
                                              .ToListAsync();
             user.WeeklyRecipes = userMealPlan;
+
+            var adminMealPlan = await _context.MealPlan
+                                             .Where(mp => mp.ApplicationUserId == "00000000-ffff-ffff-ffff-ffffffffffff")
+                                             .Include(mp => mp.Recipe)
+                                             .ToListAsync();
+            user.AdminRecipes = adminMealPlan;
+
             return View(user);
         }
 

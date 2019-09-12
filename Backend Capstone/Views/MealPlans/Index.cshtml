@@ -24,14 +24,41 @@
     <div class="col-12 d-flex flex-wrap">
         <div class="col">
             <h3 class="text-black-50 text-center">Sunday</h3>
+            <br />
             @{
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Sunday"))
                 {
-                    <h1>Sunday</h1>
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Sunday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Sunday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Sunday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
                 }
                 else
                 {
-                    <p>No recipe selected for Sunday.</p>
+                    <p>No recipe selected for this day.</p>
                 }
             }
         </div>
@@ -42,53 +69,238 @@
                 if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Monday"))
                 {
                     var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Monday").FirstOrDefault();
-                        <div id="@selected.Id" class="card shadow">
-                            <div class="card-body overflow-hidden" style="padding: 0px;">
-                                <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
-                            </div>
-                            <div class="card-body" style="padding: 8px;">
-                                <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
-                                <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
-                              
-                                <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
-                            </div>
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
                         </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Monday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Monday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
                 }
                 else
                 {
-                    <p>No recipe selected for Monday.</p>
+                    <p>No recipe selected for this day.</p>
                 }
             }
         </div>
         <div class="col">
             <h3 class="text-black-50 text-center">Tuesday</h3>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Tuesday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Tuesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Tuesday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Tuesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>No recipe selected for this day.</p>
+                }
+            }
         </div>
         <div class="col">
             <h3 class="text-black-50 text-center">Wednesday</h3>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Wednesday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Wednesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Wednesday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Wednesday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>No recipe selected for this day.</p>
+                }
+            }
         </div>
         <div class="col">
             <h3 class="text-black-50 text-center">Thursday</h3>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Thursday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Thursday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Thursday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Thursday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>No recipe selected for this day.</p>
+                }
+            }
         </div>
         <div class="col">
             <h3 class="text-black-50 text-center">Friday</h3>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Friday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Friday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Friday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Friday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>No recipe selected for this day.</p>
+                }
+            }
         </div>
         <div class="col">
             <h3 class="text-black-50 text-center">Saturday</h3>
-        </div>
+            <br />
+            @{
+                if (user.WeeklyRecipes.Any(r => r.DayOfWeek == "Saturday"))
+                {
+                    var selected = user.WeeklyRecipes.Where(r => r.DayOfWeek == "Saturday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
 
-        @foreach (var item in Model.WeeklyRecipes)
-        {
-            @*<div id="@item.Id" class="card gridCard">
-                    <div class="card-body overflow-hidden">
-                        <img class="card-img-top" src="@Url.Content(item.Recipe.ImageUrl)" />
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title" style="margin-bottom: 0px;">@item.Recipe.Title</h3>
-                        <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @item.Recipe.TotalTime minutes</small></p>
-                        <p class="card-text text-muted" style="font-size: 12px;">@item.Recipe.Description</p>
-                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@item.Id">View Recipe</a>
+                }
+                else if (user.AdminRecipes.Any(r => r.DayOfWeek == "Saturday"))
+                {
+                    var selected = user.AdminRecipes.Where(r => r.DayOfWeek == "Saturday").FirstOrDefault();
+                    <div id="@selected.Id" class="card shadow">
+                        <div class="card-body overflow-hidden" style="padding: 0px;">
+                            <img class="card-img-top" src="@Url.Content(selected.Recipe.ImageUrl)" />
+                        </div>
+                        <div class="card-body" style="padding: 8px;">
+                            <h4 class="card-title" style="margin-bottom: 0px;">@selected.Recipe.Title</h4>
+                            <p class="card-text font-weight-bold"><small class="text-muted font-weight-bold"><i class="fas fa-clock"></i>  Time: @selected.Recipe.TotalTime minutes</small></p>
+
+                            <a asp-controller="Recipes" asp-action="Details" asp-route-id="@selected.Recipe.Id">View Recipe</a>
+                        </div>
                     </div>
-                </div>*@
-        }
+                }
+                else
+                {
+                    <p>No recipe selected for this day.</p>
+                }
+            }
+        </div>
     </div>
 </div>

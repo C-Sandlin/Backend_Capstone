@@ -24,5 +24,8 @@ namespace Backend_Capstone.Models
 
         [NotMapped]
         public virtual List<MealPlan> WeeklyRecipes { get; set; }
+
+        [NotMapped]
+        public virtual List<MealPlan> AdminRecipes { get; set; }
     }
 }
