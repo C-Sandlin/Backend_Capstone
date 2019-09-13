@@ -21,12 +21,10 @@
                 <hr />
                 @if (Model.ApplicationUserId == user.Id)
                 {
-
                     <a asp-action="Edit" asp-route-id="@Model.Id" style="color: #eabb53;"><i class="fas fa-pen-square"></i>   Edit</a>
                     <hr />
                     <a asp-action="Delete" asp-route-id="@Model.Id" style="color: #ff6961;"><i class="fas fa-minus-square"></i>   Delete</a>
                     <hr />
-
                 }
 
 
@@ -46,48 +44,56 @@
                     <hr />
                 }
 
-                <form asp-action="Create" asp-controller="MealPlans" asp-route-id="@Model.Id">
-                    <div class="form-group">
-                        <select asp-for="CuisineId" class="form-control input-sm" name="dayOfWeek" asp-items="ViewBag.CuisineId">
-                            <option selected disabled>Select day</option>
-                            @{
-                                if (user.WeeklyRecipes != null)
+            <form asp-action="Create" asp-controller="MealPlans" asp-route-id="@Model.Id">
+                <div class="form-group">
+                    <select asp-for="CuisineId" class="form-control input-sm" name="dayOfWeek" asp-items="ViewBag.CuisineId" id="daySelector" onchange="showDiv()" >
+                        <option selected disabled >Select day</option>
+                        @{
+                            if (user.WeeklyRecipes != null)
+                            {
+                                if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Sunday")))
                                 {
-                                    if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Sunday")))
-                                    {
-                                        <option value="Sunday">Sunday</option>
-                                    }
-                                    if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Monday")))
-                                    {
-                                        <option value="Monday">Monday</option>
-                                    }
-                                    if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Tuesday")))
-                                    {
-                                        <option value="Tuesday">Tuesday</option>
-                                    }
-                                    if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Wednesday")))
-                                    {
-                                        <option value="Wednesday">Wednesday</option>
-                                    }
-                                    if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Thursday")))
-                                    {
-                                        <option value="Thursday">Thursday</option>
-                                    }
-                                    if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Friday")))
-                                    {
-                                        <option value="Friday">Friday</option>
-                                    }
-                                    if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Saturday")))
-                                    {
-                                        <option value="Saturday">Saturday</option>
-                                    }
-
+                                    <option value="Sunday">Sunday</option>
                                 }
+                                if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Monday")))
+                                {
+                                    <option value="Monday">Monday</option>
+                                }
+                                if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Tuesday")))
+                                {
+                                    <option value="Tuesday">Tuesday</option>
+                                }
+                                if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Wednesday")))
+                                {
+                                    <option value="Wednesday">Wednesday</option>
+                                }
+                                if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Thursday")))
+                                {
+                                    <option value="Thursday">Thursday</option>
+                                }
+                                if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Friday")))
+                                {
+                                    <option value="Friday">Friday</option>
+                                }
+                                if (!user.WeeklyRecipes.Any(r => r.DayOfWeek.Contains("Saturday")))
+                                {
+                                    <option value="Saturday">Saturday</option>
+                                }
+
                             }
-                        </select>
-                    </div>
-                    <input class="btn btn-primary btn-sm" type="submit" value="Add To Meal Plan" />
-                </form>
+                        }
+                    </select>
+                </div>
+
+                <input class="btn btn-primary btn-sm" type="submit" value="Add To Meal Plan" id="submitBtn" disabled />
+                <script type="text/javascript">
+                    function showDiv() {
+                        let buttonToHide = document.getElementById("submitBtn");
+                        buttonToHide.removeAttribute("disabled");
+                    }
+                </script>
+
+            </form>
                 <br />
             </div>
         }
@@ -97,7 +103,15 @@
             <div class="row shortRow">
                 <div class="col-5">
                     <div class="detailCardImg overflow-hidden">
-                        <img src="@Url.Content(Model.ImageUrl)" class="smallCardImage detailImg" />
+                        @if (Model.ImageUrl != null)
+                        {
+                            <img src="@Url.Content(Model.ImageUrl)" class="smallCardImage detailImg" />
+                        }
+                        else
+                        {
+                            <img src="~/images/CIC_Secondary.jpg" class="smallCardImage detailImg" />
+                        }
+
                     </div>
                 </div>
                 <div class="col detailCardTxt">

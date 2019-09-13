@@ -19,8 +19,9 @@ namespace Backend_Capstone.Models
         public string Quantity { get; set; }
 
         [Required]
-        [RegularExpression(@"^[0-9a-zA-Z''-'\s]{1,40}$", ErrorMessage = "Special characters are not allowed")]
         [StringLength(55, ErrorMessage = "Please shorten the Ingredient Name to 55 characters")]
         public string Title { get; set; }
+
+        public Recipe Recipe { get; set; }
     }
 }

@@ -31,15 +31,46 @@ namespace Backend_Capstone.Controllers
         }
 
         // GET: All Recipes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string userInput)
         {
+            var userInputNotEmpty = !String.IsNullOrEmpty(userInput);
+            if (userInputNotEmpty)
+            {
+                var allRecipes = await _context.Recipe
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .Where(r => r.Title.Contains(userInput) ||
+                                                        r.Description.Contains(userInput) ||
+                                                        r.User.FirstName.Contains(userInput) ||
+                                                        r.User.LastName.Contains(userInput))
+                                            .ToListAsync();
 
-            var allRecipes = await _context.Recipe
+
+                var ingredients = _context.Ingredient
+                                                .Include(i => i.Recipe)
+                                                .AsQueryable();
+
+                if (allRecipes.Count == 0 || ingredients.Any(i => i.Title.Contains(userInput)))
+                {
+                    allRecipes = ingredients.Where(i => i.Title.Contains(userInput))
+                                            .Select(i => i.Recipe)
+                                            .Include(r => r.Ingredients)
+                                            .Include(r => r.Instructions)
+                                            .ToList();
+                };
+                allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
+                return View(allRecipes);
+            
+            }
+            else
+            {
+                var allRecipes = await _context.Recipe
                                             .Include(r => r.Ingredients)
                                             .Include(r => r.Instructions)
                                             .ToListAsync();
-            allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
-            return View(allRecipes);
+                allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
+                return View(allRecipes);
+            }
         }
 
         // GET: my recipes
@@ -135,13 +166,16 @@ namespace Backend_Capstone.Controllers
             {
                 recipe.ApplicationUserId = user.Id;
 
-                try
+                if (file != null)
                 {
-                    recipe.ImageUrl = await SaveFile(file, user.Id);
-                }
-                catch (Exception ex)
-                {
-                    return NotFound();
+                    try
+                    {
+                        recipe.ImageUrl = await SaveFile(file, user.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        return NotFound();
+                    }
                 }
 
                 _context.Add(recipe);
@@ -178,7 +212,7 @@ namespace Backend_Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe/*, IFormFile file*/)
         {
             var user = await GetCurrentUserAsync();
             var fetchedRecipe = await _context.Recipe
@@ -194,8 +228,21 @@ namespace Backend_Capstone.Controllers
 
             if (ModelState.IsValid)
             {
+
                 //this remains same
                 _context.Entry(fetchedRecipe).CurrentValues.SetValues(recipe);
+
+                //if (file != null)
+                //{
+                //    try
+                //    {
+                //        recipe.ImageUrl = await SaveFile(file, user.Id);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        return NotFound();
+                //    }
+                //}
 
                 // loop through exising ingredients - if match with passed in ingredient, remove the existing ingredient
                 // if new recipe being passed in does not have an ingredient the old one had, you have removed it during edit process, so remove from object.
@@ -308,11 +355,11 @@ namespace Backend_Capstone.Controllers
 
         private async Task<string> SaveFile(IFormFile file, string userId)
         {
-            if (file.Length > 5242880) throw new Exception("File too large!");
+            
             var ext = GetMimeType(file.FileName);
             if (ext == null) throw new Exception("Invalid file type");
             var epoch = new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds();
-            var fileName = $"{epoch}-{userId}.{ext}";
+            var fileName = $"{epoch}.{ext}";
             var webRoot = _env.WebRootPath;
             var absoluteFilePath = Path.Combine(
                 webRoot,

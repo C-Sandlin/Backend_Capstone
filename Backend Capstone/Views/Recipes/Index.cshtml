@@ -16,9 +16,16 @@
     <div class="col-11 d-flex flex-wrap">
         @foreach (var item in Model)
         {
-            <div id="@item.Id" class="card gridCard">
+            <div id="@item.Id" class="card gridCard" style="border-bottom: 4px solid #eabb53;">
                 <div class="card-body overflow-hidden">
-                    <img class="card-img-top" src="@Url.Content(item.ImageUrl)" />
+                    @if (item.ImageUrl != null)
+                        {
+                            <img src="@Url.Content(item.ImageUrl)" class="card-img-top" />
+                        }
+                        else
+                        {
+                            <img src="~/images/CIC_Secondary.jpg" class="card-img-top" />
+                        }
                 </div>
                 <div class="card-body">
                     <h3 class="card-title" style="margin-bottom: 0px;">@item.Title</h3>
