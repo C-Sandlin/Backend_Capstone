@@ -13,7 +13,7 @@
     <div class="col-11 d-flex flex-wrap">
         @foreach (var item in Model)
         {
-            <div id="@item.Recipe.Id" class="card gridCard">
+            <div id="@item.Recipe.Id" class="card gridCard" style="border-bottom: 4px solid #eabb53;">
                 <div class="card-body overflow-hidden">
                     <img class="card-img-top" src="@Url.Content(item.Recipe.ImageUrl)" />
                 </div>
