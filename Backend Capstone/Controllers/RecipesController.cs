@@ -212,7 +212,7 @@ namespace Backend_Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe/*, IFormFile file*/)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
         {
             var user = await GetCurrentUserAsync();
             var fetchedRecipe = await _context.Recipe
@@ -261,7 +261,7 @@ namespace Backend_Capstone.Controllers
 
                 foreach (var passedInIngredient in recipe.Ingredients)
                 {
-                    var existingIngredient = fetchedRecipe.Ingredients.Where(i => i.Id == passedInIngredient.Id).SingleOrDefault();
+                    var existingIngredient = fetchedRecipe.Ingredients.Where(i => i.Id == passedInIngredient.Id && i.Id != 0).SingleOrDefault();
                     if (existingIngredient != null)
                     {
                         _context.Entry(existingIngredient).CurrentValues.SetValues(passedInIngredient);
@@ -280,7 +280,7 @@ namespace Backend_Capstone.Controllers
 
                 foreach (var passedInInstruction in recipe.Instructions)
                 {
-                    var existingInstruction = fetchedRecipe.Instructions.Where(i => i.Id == passedInInstruction.Id).SingleOrDefault();
+                    var existingInstruction = fetchedRecipe.Instructions.Where(i => i.Id == passedInInstruction.Id && i.Id != 0).SingleOrDefault();
                     if (existingInstruction != null)
                     {
                         _context.Entry(existingInstruction).CurrentValues.SetValues(passedInInstruction);
