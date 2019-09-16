@@ -54,6 +54,7 @@ namespace Backend_Capstone.Controllers
                 {
                     allRecipes = ingredients.Where(i => i.Title.Contains(userInput))
                                             .Select(i => i.Recipe)
+                                            .Distinct()
                                             .Include(r => r.Ingredients)
                                             .Include(r => r.Instructions)
                                             .ToList();
