@@ -50,7 +50,11 @@ namespace Backend_Capstone.Controllers
                                                 .Include(i => i.Recipe)
                                                 .AsQueryable();
 
-                if (allRecipes.Count == 0 || ingredients.Any(i => i.Title.Contains(userInput)))
+                var cuisines = _context.Cuisine
+                                        .Include(c => c.Recipes)
+                                        .AsQueryable();
+
+                if (allRecipes.Count == 0 || ingredients.Any(i => i.Title.Contains(userInput)) || cuisines.Any(c => c.Title.Contains(userInput)))
                 {
                     allRecipes = ingredients.Where(i => i.Title.Contains(userInput))
                                             .Select(i => i.Recipe)
@@ -58,10 +62,21 @@ namespace Backend_Capstone.Controllers
                                             .Include(r => r.Ingredients)
                                             .Include(r => r.Instructions)
                                             .ToList();
+
+                    if (cuisines.Any(c => c.Title.Contains(userInput)))
+                    {
+                        var cuisineRecipes = await _context.Recipe
+                                                 .Include(r => r.Cuisine)
+                                                 .Include(r => r.Ingredients)
+                                                 .Include(r => r.Instructions)
+                                                 .Where(c => c.Cuisine.Title.Contains(userInput))
+                                                 .ToListAsync();
+                        allRecipes.AddRange(cuisineRecipes);
+                    }
                 };
                 allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
                 return View(allRecipes);
-            
+
             }
             else
             {
@@ -135,6 +150,7 @@ namespace Backend_Capstone.Controllers
                 .Include(r => r.User)
                 .Include(r => r.Ingredients)
                 .Include(r => r.Instructions)
+                .Include(r => r.Cuisine)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (recipe == null)
@@ -356,7 +372,7 @@ namespace Backend_Capstone.Controllers
 
         private async Task<string> SaveFile(IFormFile file, string userId)
         {
-            
+
             var ext = GetMimeType(file.FileName);
             if (ext == null) throw new Exception("Invalid file type");
             var epoch = new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds();
