@@ -50,17 +50,33 @@ namespace Backend_Capstone.Controllers
                                                 .Include(i => i.Recipe)
                                                 .AsQueryable();
 
-                if (allRecipes.Count == 0 || ingredients.Any(i => i.Title.Contains(userInput)))
+                var cuisines = _context.Cuisine
+                                        .Include(c => c.Recipes)
+                                        .AsQueryable();
+
+                if (allRecipes.Count == 0 || ingredients.Any(i => i.Title.Contains(userInput)) || cuisines.Any(c => c.Title.Contains(userInput)))
                 {
                     allRecipes = ingredients.Where(i => i.Title.Contains(userInput))
                                             .Select(i => i.Recipe)
+                                            .Distinct()
                                             .Include(r => r.Ingredients)
                                             .Include(r => r.Instructions)
                                             .ToList();
+
+                    if (cuisines.Any(c => c.Title.Contains(userInput)))
+                    {
+                        var cuisineRecipes = await _context.Recipe
+                                                 .Include(r => r.Cuisine)
+                                                 .Include(r => r.Ingredients)
+                                                 .Include(r => r.Instructions)
+                                                 .Where(c => c.Cuisine.Title.Contains(userInput))
+                                                 .ToListAsync();
+                        allRecipes.AddRange(cuisineRecipes);
+                    }
                 };
                 allRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
                 return View(allRecipes);
-            
+
             }
             else
             {
@@ -134,6 +150,7 @@ namespace Backend_Capstone.Controllers
                 .Include(r => r.User)
                 .Include(r => r.Ingredients)
                 .Include(r => r.Instructions)
+                .Include(r => r.Cuisine)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (recipe == null)
@@ -212,7 +229,7 @@ namespace Backend_Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe/*, IFormFile file*/)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe, IFormFile file)
         {
             var user = await GetCurrentUserAsync();
             var fetchedRecipe = await _context.Recipe
@@ -232,17 +249,17 @@ namespace Backend_Capstone.Controllers
                 //this remains same
                 _context.Entry(fetchedRecipe).CurrentValues.SetValues(recipe);
 
-                //if (file != null)
-                //{
-                //    try
-                //    {
-                //        recipe.ImageUrl = await SaveFile(file, user.Id);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        return NotFound();
-                //    }
-                //}
+                if (file != null)
+                {
+                    try
+                    {
+                        fetchedRecipe.ImageUrl = await SaveFile(file, user.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        return NotFound();
+                    }
+                }
 
                 // loop through exising ingredients - if match with passed in ingredient, remove the existing ingredient
                 // if new recipe being passed in does not have an ingredient the old one had, you have removed it during edit process, so remove from object.
@@ -261,7 +278,7 @@ namespace Backend_Capstone.Controllers
 
                 foreach (var passedInIngredient in recipe.Ingredients)
                 {
-                    var existingIngredient = fetchedRecipe.Ingredients.Where(i => i.Id == passedInIngredient.Id).SingleOrDefault();
+                    var existingIngredient = fetchedRecipe.Ingredients.Where(i => i.Id == passedInIngredient.Id && i.Id != 0).SingleOrDefault();
                     if (existingIngredient != null)
                     {
                         _context.Entry(existingIngredient).CurrentValues.SetValues(passedInIngredient);
@@ -280,7 +297,7 @@ namespace Backend_Capstone.Controllers
 
                 foreach (var passedInInstruction in recipe.Instructions)
                 {
-                    var existingInstruction = fetchedRecipe.Instructions.Where(i => i.Id == passedInInstruction.Id).SingleOrDefault();
+                    var existingInstruction = fetchedRecipe.Instructions.Where(i => i.Id == passedInInstruction.Id && i.Id != 0).SingleOrDefault();
                     if (existingInstruction != null)
                     {
                         _context.Entry(existingInstruction).CurrentValues.SetValues(passedInInstruction);
@@ -355,7 +372,7 @@ namespace Backend_Capstone.Controllers
 
         private async Task<string> SaveFile(IFormFile file, string userId)
         {
-            
+
             var ext = GetMimeType(file.FileName);
             if (ext == null) throw new Exception("Invalid file type");
             var epoch = new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds();

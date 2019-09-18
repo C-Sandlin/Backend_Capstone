@@ -16,5 +16,7 @@ namespace Backend_Capstone.Models
         [StringLength(55, ErrorMessage = "Please shorten the cuisine title to 55 characters")]
         public string Title { get; set; }
 
+        public virtual List<Recipe> Recipes { get; set; }
+
     }
 }
