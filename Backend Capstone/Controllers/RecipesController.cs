@@ -229,7 +229,7 @@ namespace Backend_Capstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,Title,PrepTime,CookTime,Servings,Description,CuisineId,ApplicationUserId,DateAdded,Ingredients,Instructions")] Recipe recipe, IFormFile file)
         {
             var user = await GetCurrentUserAsync();
             var fetchedRecipe = await _context.Recipe
@@ -249,17 +249,17 @@ namespace Backend_Capstone.Controllers
                 //this remains same
                 _context.Entry(fetchedRecipe).CurrentValues.SetValues(recipe);
 
-                //if (file != null)
-                //{
-                //    try
-                //    {
-                //        recipe.ImageUrl = await SaveFile(file, user.Id);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        return NotFound();
-                //    }
-                //}
+                if (file != null)
+                {
+                    try
+                    {
+                        fetchedRecipe.ImageUrl = await SaveFile(file, user.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        return NotFound();
+                    }
+                }
 
                 // loop through exising ingredients - if match with passed in ingredient, remove the existing ingredient
                 // if new recipe being passed in does not have an ingredient the old one had, you have removed it during edit process, so remove from object.
