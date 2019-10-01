@@ -112,7 +112,7 @@ namespace Backend_Capstone.Controllers
                                             .Include(r => r.Ingredients)
                                             .Include(r => r.Instructions)
                                             .OrderByDescending(r => r.DateAdded)
-                                            .Take(5)
+                                            .Take(6)
                                             .ToListAsync();
             myRecipes.ForEach(recipe => recipe.Instructions.OrderBy(i => i.InstructionNumber));
             return View(myRecipes);
